@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    background: rgb(48, 53, 53);
+    display: flex;
+    align-items: center;
+    /*Main center Y axis*/
+    justify-content: center;
+    height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px white solid; */
+    padding: 0 20rem;
+    /* align-content: space-between; */
+}
+
+.container {
+    text-align: center;
+    /* border: 1px blue solid; */
+
+}
+
+.play-container {
+    display: flex;
+    flex-direction: row;
+    margin: 3rem 0;
+    /* border: 1px green solid; */
+    padding: 0 8rem;
+
+}
+
+.score {
+    display: flex;
+    /* border: 1px red solid; */
+    flex-direction: row;
+}
+
+.score-content {
+    display: inherit;
+    flex-direction: column;
+    /* align-content: flex-end; */
+    justify-content: space-around;
+    text-align: center;
+    /* border: 1px green solid; */
+}
+
+.cards-container {
+    padding: 0 2rem;
+}
+
+.sum-amount {
+    padding: 2rem;
+    background-color: gold;
+    border-radius: 50%;
+}
+
+img {
+    height: 150px;
+    width: 140px;
+}
+
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 1rem 3rem;
+    font-size: 2rem;
+    /* width: 3rem; */
+    border-radius: 1rem;
+    background-color: goldenrod;
+    text-decoration: none;
+}
