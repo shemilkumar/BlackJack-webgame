@@ -1,7 +1,7 @@
 'use-strict'
 
-const dealercardsContainer = document.querySelector('.cards-container-dealer');
-const playercardsContainer = document.querySelector('.cards-container-player');
+import view from "./view.js";
+
 const sumDealer = document.querySelector('.dealer-sum-amount');
 const sumPlayer = document.querySelector('.player-sum-amount');
 
@@ -132,6 +132,8 @@ class Play {
     _addHitHandler() {
         // debuggers;
         this._player.hit(this._deck.deal());
+        view.render([this._player.handCards], [this._player.handValue], true);
+
         this._hitCheck();
     }
 
@@ -215,10 +217,18 @@ class Play {
     }
 
     _showWithoutFirstCard() {
+
+        const valueWithoutFirstCard = this._dealer.handValue - cardValues[this._dealer.handCards[0].rank]
         console.log("Dealer - without first card");
-        console.log(this._dealer.handCards, this._dealer.handValue - cardValues[this._dealer.handCards[0].rank]);
+        console.log(this._dealer.handCards, valueWithoutFirstCard);
         console.log("Player");
         console.log(this._player.handCards, this._player.handValue);
+
+        // Render the Views
+        const cardArr = [this._player.handCards, this._dealer.handCards, true];
+        const valuesArr = [this._player.handValue, valueWithoutFirstCard];
+
+        view.render(cardArr, valuesArr);
     }
 
     _showResult() {
@@ -226,6 +236,11 @@ class Play {
         console.log(this._dealer.handCards, this._dealer.handValue);
         console.log("Player");
         console.log(this._player.handCards, this._player.handValue);
+
+        const cardArr = [this._player.handCards, this._dealer.handCards];
+        const valuesArr = [this._player.handValue, this._dealer.handValue];
+
+        view.render(cardArr, valuesArr);
 
         this._choice = prompt("Do u wanna play again ? (y/n)");
         if (this._choice === 'y') this.start();

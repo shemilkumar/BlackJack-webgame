@@ -7,7 +7,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
-    background: rgb(48, 53, 53);
+    background: url('/src/img/green_carpet.jpeg');
     display: flex;
     align-items: center;
     /*Main center Y axis*/
@@ -18,8 +18,11 @@ body {
 .main-container {
     display: flex;
     flex-direction: row;
-    /* border: 1px white solid; */
-    padding: 0 20rem;
+    border: 3px #FFD700 solid;
+    border-radius: 100px;
+    padding: 0 10rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    /* background: url('/src/img/bgd_menu.png'); */
     /* align-content: space-between; */
 }
 
@@ -63,9 +66,16 @@ body {
     border-radius: 50%;
 }
 
+/* img {
+    height: 240px;
+    width: 220px;
+} */
+
 img {
-    height: 150px;
-    width: 140px;
+    /* float: left; */
+    width: 240px;
+    height: 220px;
+    /* object-fit: cover; */
 }
 
 .status-container {
@@ -83,3 +93,19 @@ img {
     background-color: goldenrod;
     text-decoration: none;
 }
+
+.single-card {
+    height: 170px;
+    width: 135px;
+}
+
+
+.back-card {
+    height: 200px;
+    width: 200px;
+    /* margin-top: 100px; */
+}
+
+
+
+/* vv */
