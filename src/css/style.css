@@ -1,3 +1,9 @@
+:root {
+    --primary-color: #FFD700;
+    --primary-dark: #ffb302;
+    --primary-dark-2: #d89b0b;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -16,42 +22,58 @@ body {
 }
 
 .main-container {
+    width: 70%;
+    height: 80%;
     display: flex;
     flex-direction: row;
-    border: 3px #FFD700 solid;
-    border-radius: 100px;
+    justify-content: center;
+    align-items: center;
     padding: 0 10rem;
+    border-radius: 100px;
+    border: 3px var(--primary-color) solid;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     /* background: url('/src/img/bgd_menu.png'); */
-    /* align-content: space-between; */
 }
 
 .container {
-    text-align: center;
+    width: 90%;
+    height: 90%;
+    align-items: space-between;
+    /* text-align: center; */
     /* border: 1px blue solid; */
-
 }
+
 
 .play-container {
     display: flex;
     flex-direction: row;
-    margin: 3rem 0;
-    /* border: 1px green solid; */
-    padding: 0 8rem;
-
+    /* border: 1px black solid; */
+    /* margin: 3rem 0;
+    padding: 0 8rem; */
+    height: 33%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .score {
     display: flex;
     /* border: 1px red solid; */
-    flex-direction: row;
+    float: right;
+    height: 75%;
+    /* justify-content: space-between; */
+    /* justify-content: flex-end; */
+    /* flex-direction: row; */
+    /* margin-right: auto; */
+
 }
 
 .score-content {
+    float: right;
     display: inherit;
     flex-direction: column;
     /* align-content: flex-end; */
-    justify-content: space-around;
+    justify-content: space-between;
     text-align: center;
     /* border: 1px green solid; */
 }
@@ -61,8 +83,11 @@ body {
 }
 
 .sum-amount {
-    padding: 2rem;
-    background-color: gold;
+    padding: 1rem;
+    height: 1rem;
+    width: 10rem;
+    background-color: var(--primary-color);
+    /* border: 1px red solid; */
     border-radius: 50%;
 }
 
@@ -90,22 +115,121 @@ img {
     font-size: 2rem;
     /* width: 3rem; */
     border-radius: 1rem;
-    background-color: goldenrod;
+    background-color: var(--primary-dark);
     text-decoration: none;
 }
 
 .single-card {
     height: 170px;
     width: 135px;
+    margin: 0 0.4rem;
 }
 
 
 .back-card {
-    height: 200px;
-    width: 200px;
+    height: 170px;
+    width: 140px;
+    margin: 0 0.4rem;
+
     /* margin-top: 100px; */
 }
 
+.chips-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 50%;
+    background-color: white;
+    border-radius: 40px;
+    border: solid 3px red;
 
+    /* padding: 5rem 6rem; */
+    padding: 4rem 3rem;
+    box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    transition: all 0.5s;
+}
 
-/* vv */
+.btn--close-modal {
+    font-family: inherit;
+    color: inherit;
+    position: absolute;
+    top: 0.5rem;
+    right: 1.6rem;
+    font-size: 3.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 5;
+    transition: all 0.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.single-chip {
+    /* transform: scale(0.7);// */
+    height: 80px;
+    width: 80px;
+}
+
+.small-chip {
+    height: 90px;
+    width: 120px;
+    border-radius: 50%;
+}
+
+.first-chip {
+    margin: 0 0.5rem;
+}
+
+.five-chip {
+    height: 95px;
+    width: 95px;
+    margin: 0 0.8rem;
+    border-radius: 50%;
+}
+
+.chips-modal-p,
+.chips-value-total {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark-2);
+    font-weight: bold;
+}
+
+.chips-value-total {
+    color: var(--primary-dark);
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.btn-place-bet {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.5rem;
+    background-color: var(--primary-dark-2);
+    color: white;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.chips-btn {
+    text-align: center;
+    /* border: #d89b0b 1px solid; */
+}

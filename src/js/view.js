@@ -92,7 +92,7 @@ class View {
     }
 
     _generateWithoutFirstMarkup(card) {
-        return `<img src="/src/img/Deck-cards.png" alt="FirstCard" class="back-card" ><img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
+        return `<img src="/src/img/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
     }
 }
 

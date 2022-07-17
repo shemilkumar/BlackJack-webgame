@@ -14,24 +14,27 @@
         <div class="container">
             <div class="play-container dealer-container">
                 <div class="cards-container-dealer">
-                    <img src="/src/img/cards/ace_of_hearts.png" alt="Card" class="single-card">
+                    <!-- <img src="/src/img/cards/ace_of_hearts.png" alt="Card" class="single-card">
                     <img src="/src/img/cards/ace_of_clubs.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/ace_of_diamonds.png" alt="Card" class="single-card">
+                    <img src="/src/img/cards/ace_of_diamonds.png" alt="Card" class="single-card"> -->
                 </div>
 
             </div>
 
             <div class="status-container">
                 <button class="btn btn-stay">Stay</button>
-                <img src="/src/img/chips/chipRedWhite_sideBorder.png" alt="Chip" class="center-chip">
+                <!-- <img src="/src/img/chips/chipRedWhite_sideBorder.png" alt="Chip" class="center-chip"> -->
                 <button class="btn btn-hit">Hit</button>
             </div>
 
             <div class="play-container player-container">
                 <div class="cards-container-player">
-                    <img src="/src/img/cards/jack_of_clubs.png" alt="Card" class="single-card">
+                    <!-- <img src="/src/img/cards/jack_of_clubs.png" alt="Card" class="single-card">
                     <img src="/src/img/cards/jack_of_hearts.png" alt="Card" class="single-card">
                     <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card">
+                    <img src="/src/img/cards/jack_of_hearts.png" alt="Card" class="single-card">
+                    <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card">
+                    <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card"> -->
                 </div>
             </div>
         </div>
@@ -39,14 +42,38 @@
         <div class="score">
             <div class="score-content">
                 <div class="card-sum">
-                    <span class="sum-amount dealer-sum-amount">18</span>
+                    <span class="sum-amount dealer-sum-amount"> 8 </span>
                 </div>
-                <img src="/src/img/Deck-cards.png" alt="deck of cards">
+                <!-- <img src="/src/img/back_card_blue.png" class="back-card" alt="deck of cards"> -->
                 <div class="card-sum">
                     <span class="sum-amount player-sum-amount">20</span>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="overlay hidden"></div>
+
+    <div class="chips-container hidden">
+        <button class="btn--close-modal">&times;</button>
+
+        <p class="chips-modal-p">Your Chips - <span class="available-chips">10</span></p>
+
+        <div class="chips-btn">
+
+            <img src="src/img/chips/1_chips.png" alt="chip" class="single-chip first-chip" data-value="1">
+            <img src="src/img/chips/5_chips.png" alt="chip" class="single-chip five-chip" data-value="5">
+            <img src="src/img/chips/10_chips.png" alt="chip" class="single-chip single-chip-10" data-value="10">
+            <img src="src/img/chips/20_chips.png" alt="chip" class="single-chip small-chip" data-value="20">
+            <img src="src/img/chips/50_chips.png" alt="chip" class="single-chip small-chip" data-value="50">
+            <img src="src/img/chips/100_chips.png" alt="chip" class="single-chip small-chip" data-value="100">
+
+
+        </div>
+
+        <div class="chips-value-total">0</div>
+
+        <button class="btn-place-bet">place the bet !</button>
     </div>
 
     <script type="module" defer src="/src/js/script.js"></script>

@@ -2,19 +2,13 @@
 
 import view from "./view.js";
 
-const sumDealer = document.querySelector('.dealer-sum-amount');
-const sumPlayer = document.querySelector('.player-sum-amount');
-
-
 const cardValues = {
     '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'jack': 10,
     'queen': 10, 'king': 10, 'ace': 11,
 };
 
-
 class Deck {
 
-    // _allCards = [];
     _allCardsShuffled = [];
 
     _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
@@ -84,24 +78,11 @@ class Chips {
     looseBet(bet) {
         this.chips -= bet;
     }
-
-    takeBet() {
-        while (true) {
-            // alert("You have 100 chips in your pocket");
-            let betFromUser = +(prompt("Place your bet"));
-
-            if (Number.isFinite(betFromUser)) {
-                if (betFromUser > 0) {
-
-                    betFromUser = (betFromUser <= this.chips) ? betFromUser : alert("your bet amount is more than your available chips");
-                    if (Number.isFinite(betFromUser)) return betFromUser;
-                }
-                else alert("Please enter valid amount");
-            }
-            else alert("Please enter a number");
-        }
-    }
-
+    // takeBet() {
+    //     // alert("You have 100 chips in your pocket");
+    //     // let betFromUser = +(prompt("Place your bet"));
+    //     this._showChipsModal();
+    // }
 }
 
 
@@ -112,6 +93,7 @@ class Chips {
 
 class Play {
 
+
     _deck;
     _player;
     _dealer;
@@ -120,17 +102,91 @@ class Play {
     _choice;
     _round = 0;
 
+    // Main Elements
     _btnStay = document.querySelector('.btn-stay');
     _btnHit = document.querySelector('.btn-hit');
+
+    // Modal elements
+    _count = 0;
+    _chipsContainerEl = document.querySelector('.chips-container');
+    _overlay = document.querySelector('.overlay');
+
+    _btnBetCount = document.querySelector('.chips-btn');
+    _availableChips = document.querySelector('.available-chips');
+    _totalChipsValue = document.querySelector('.chips-value-total');
+    _btnPlaceBet = document.querySelector('.btn-place-bet');
+
 
     constructor() {
 
         this._btnHit.addEventListener('click', this._addHitHandler.bind(this));
         this._btnStay.addEventListener('click', this._addStayHandler.bind(this));
+
+        // Modal events
+        this._btnBetCount.addEventListener('click', this._betCountHandler.bind(this));
+        this._btnPlaceBet.addEventListener('click', this._placeBetHandler.bind(this));
     }
 
+    // Modal methods
+
+    _clearChips() {
+        this._count = 0;
+        this._totalChipsValue.textContent = 0;
+    }
+
+    _showChipsModal() {
+
+        this._availableChips.textContent = this._chips.chips;
+
+        this._chipsContainerEl.classList.remove('hidden');
+        this._overlay.classList.remove('hidden');
+    }
+
+    _closeChipsModal() {
+        this._chipsContainerEl.classList.add('hidden');
+        this._overlay.classList.add('hidden');
+    }
+
+    _betCountHandler(e) {
+
+        if (e.target.querySelector('.single-chip')) return;
+
+        if (e.target.dataset.value === '1') this._count++;
+        if (e.target.dataset.value === '5') this._count += 5;
+        if (e.target.dataset.value === '10') this._count += 10;
+        if (e.target.dataset.value === '20') this._count += 20;
+        if (e.target.dataset.value === '50') this._count += 50;
+        if (e.target.dataset.value === '100') this._count += 100;
+
+        this._totalChipsValue.textContent = this._count;
+    }
+
+    _placeBetHandler() {
+
+        let betFromUser = +(this._totalChipsValue.textContent);
+
+        if (betFromUser === 0) alert("Please select your chips for the bet");
+
+        if (betFromUser > 0) {
+
+            if (betFromUser > this._chips.chips) {
+                alert("your bet amount is more than your available chips");
+                this._clearChips();
+            }
+
+            if (betFromUser <= this._chips.chips) {
+                this._closeChipsModal();
+                this._clearChips();
+
+                this._bet = betFromUser;
+                this._startPlay();
+            }
+        }
+    }
+
+    // Main methods
+
     _addHitHandler() {
-        // debuggers;
         this._player.hit(this._deck.deal());
         view.render([this._player.handCards], [this._player.handValue], true);
 
@@ -149,7 +205,7 @@ class Play {
 
     _startPlay() {
 
-        console.log("=============== round " + (++this._round) + "================")
+        console.log("=============== round " + (++this._round) + "================");
 
         this._deck = new Deck();
         this._player = new Hand();
@@ -232,6 +288,7 @@ class Play {
     }
 
     _showResult() {
+
         console.log("Dealer");
         console.log(this._dealer.handCards, this._dealer.handValue);
         console.log("Player");
@@ -250,20 +307,15 @@ class Play {
 
         if (this._round === 0) this._chips = new Chips();
 
-        if (this._chips.chips > 0) {
-            this._bet = this._chips.takeBet();
-            console.log("start");
-            this._startPlay();
-            console.log("end");
-        }
-        else {
+        if (this._chips.chips > 0) this._showChipsModal();
+
+        if (this._chips.chips <= 0) {
             console.log("You loose the game !");
             alert("You loose the game, you dont have any chips for bet !!!");
             this._chips = 0;
             return;
         }
     }
-
 }
 
 const game = function () {
@@ -272,185 +324,3 @@ const game = function () {
 }
 
 game();
-
-
-
-
-// const dealerWin = function (chips, bet, dealer, player) {
-
-//     chips.looseBet(bet);
-//     console.log(chips.chips);
-
-//     console.log("dealer wins --");
-//     console.log("Dealer");
-//     console.log(dealer.handCards, dealer.handValue);
-//     console.log("Player");
-//     console.log(player.handCards, player.handValue);
-// }
-
-// const playerWin = function (chips, bet, dealer, player) {
-
-//     chips.winBet(bet);
-//     console.log(chips.chips);
-
-//     console.log("player wins --");
-//     console.log("Dealer");
-//     console.log(dealer.handCards, dealer.handValue);
-//     console.log("Player");
-//     console.log(player.handCards, player.handValue);
-// }
-
-// const playAgain = function () {
-//     choice = prompt("Do u wanna play again ? (y/n)");
-//     if (choice === 'y') call();
-// }
-
-
-
-// const play = function () {
-//     console.log("=============== round " + (++round) + "================")
-
-//     deck = new Deck();
-
-//     player = new Hand();
-//     dealer = new Hand();
-
-//     console.log(bet);
-
-//     const players = ["player", "dealer"];
-
-//     for (const iterator of players) {
-//         player.addCard(deck.deal());
-//         dealer.addCard(deck.deal());
-//     }
-
-//     console.log("Dealer - without first card");
-//     console.log(dealer.handCards, dealer.handValue - cardValues[dealer.handCards[0].rank]);
-//     console.log("Player");
-//     console.log(player.handCards, player.handValue);
-
-//     if (player.handValue === 21) {
-
-//         playerWin(chips, bet, dealer, player);
-//         playAgain();
-
-//     }
-// }
-
-// const hitCheck = function (dealerCheck = false) {
-//     if (!dealerCheck) {
-//         if (player.handValue >= 22) {
-
-//             dealerWin(chips, bet, dealer, player);
-//             playAgain();
-
-//         }
-//     }
-//     if (dealerCheck) {
-//         if (dealer.handValue >= 22) {
-
-//             playerWin(chips, bet, dealer, player);
-
-//             playAgain();
-//         }
-//         else {
-//             dealerWin(chips, bet, dealer, player);
-//             playAgain();
-//         }
-//     }
-// }
-
-// const stayCheck = function () {
-
-//     if (dealer.handValue < 22) {
-//         if (dealer.handValue > player.handValue) {
-
-//             dealerWin(chips, bet, dealer, player);
-//             playAgain();
-//         }
-//         else {
-//             while (dealer.handValue <= player.handValue) {
-//                 dealer.hit(deck.deal());
-//                 hitCheck(true);
-//             }
-//         }
-//     }
-//     else {
-//         playerWin(chips, bet, dealer, player);
-//         playAgain();
-//     }
-
-// }
-
-// btnHit.addEventListener('click', function () {
-//     player.hit(deck.deal());
-//     hitCheck();
-// });
-
-// btnStay.addEventListener('click', function () {
-//     console.log("yes");
-//     dealer.stay(deck.deal());
-//     stayCheck();
-// });
-
-// const call = function () {
-
-//     if (round === 0) {
-//         init();
-//         bet = chips.takeBet();
-//         play();
-//         console.log(round);
-//     } else {
-//         if (chips.chips > 0) {
-//             bet = chips.takeBet();
-//             play();
-//             console.log("yes in if");
-//         }
-//         else {
-//             console.log("You loose the game !");
-//             alert("You loose the game, you dont have any chips for bet !!!");
-//             return;
-//         }
-//     }
-// }
-
-
-// init();
-// call();
-
-
-
-
-
-
-
-
-
-
-// let markup = h.cards.map(card => `<img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`).join('\n');
-
-// dealercardsContainer.innerHTML = ' ';
-// dealercardsContainer.insertAdjacentHTML("afterbegin", markup);
-
-// // let span = h.cards.map(card => `<span class="sum-amount ">${card.value}</span>`).join('\n');
-// console.log(h.value);
-// sumDealer.innerHTML = '';
-// sumDealer.insertAdjacentHTML("afterbegin", `<span class="sum-amount ">${h.value}</span>`);
-
-// h.value = 0;
-// h.cards = [];
-
-// for (let i = 0; i < 3; i++) {
-//     h.addCard(d.deal());
-//     // console.log(h.cards)
-// }
-
-// markup = h.cards.map(card => `<img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`).join('\n');
-
-// playercardsContainer.innerHTML = ' ';
-// playercardsContainer.insertAdjacentHTML("afterbegin", markup);
-
-// sumPlayer.innerHTML = '';
-// sumPlayer.insertAdjacentHTML("afterbegin", `<span class="sum-amount ">${h.value}</span>`);
-
-// console.log(markup);
