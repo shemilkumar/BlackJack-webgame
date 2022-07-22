@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlackJack</title>
     <link rel="stylesheet" href="/src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -55,7 +56,7 @@
     <div class="overlay hidden"></div>
 
     <div class="chips-container hidden">
-        <button class="btn--close-modal">&times;</button>
+        <!-- <button class="btn--close-modal">&times;</button> -->
 
         <p class="chips-modal-p">Your Chips - <span class="available-chips">10</span></p>
 
@@ -74,6 +75,54 @@
         <div class="chips-value-total">0</div>
 
         <button class="btn-place-bet">place the bet !</button>
+    </div>
+
+    <!-- Flash message -->
+    <div class="overlay-success hidden"></div>
+    <div class="overlay-error hidden"></div>
+
+
+    <div class="success_container hidden">
+        <div class="block">
+            <div class="imager">
+                <img src="https://img.icons8.com/arcade/64/000000/experimental-trophy-arcade.png" />
+            </div>
+
+            <div class="message">
+                <p class="head">Great !!!
+                <p>
+                <p>You won the bet 💰️</p>
+            </div>
+            <div class="undo success-close">&times;</div>
+        </div>
+    </div>
+
+    <!-- //Here Success Alert is completed// -->
+    <div class="error_container hidden">
+        <div class="error_block">
+            <div class="error_imager">
+                <img
+                    src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-error-security-flaticons-flat-flat-icons.png" />
+            </div>
+            <div class="error_message">
+                <p class="error_head">Bad Luck</p>
+                <p>You loose the bet 💥️</p>
+            </div>
+            <div class="undo error-close">&times;</div>
+        </div>
+    </div>
+
+    <div class="jackpot_container hidden">
+        <div class="block">
+            <div class="imager">
+                <img src="https://img.icons8.com/arcade/64/000000/experimental-trophy-arcade.png" />
+            </div>
+
+            <div class="message">
+                <p class="head">🎉️ Jackpot 💲️</p>
+            </div>
+            <div class="undo success-close">&times;</div>
+        </div>
     </div>
 
     <script type="module" defer src="/src/js/script.js"></script>

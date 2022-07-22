@@ -14,6 +14,10 @@ class Deck {
     _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
     _ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 
+    // Jackpot check
+    // _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+    // _ranks = ['2', 'king', 'ace'];
+
     _createCard = (suitsValue, ranksValue) => ({ suit: suitsValue, rank: ranksValue });
 
     _allCards = [].concat.apply([], this._suits.map(s => this._ranks.map(r => this._createCard(s, r))));
@@ -116,8 +120,15 @@ class Play {
     _totalChipsValue = document.querySelector('.chips-value-total');
     _btnPlaceBet = document.querySelector('.btn-place-bet');
 
+    //Flash message
+    _successMssgEl = document.querySelector('.success_container');
+    _errorMssgEl = document.querySelector('.error_container');
+    _errorClose = document.querySelector('.error-close');
+    _successClose = document.querySelector('.success-close');
+    _jackpotEl = document.querySelector('.jackpot_container');
 
     constructor() {
+
 
         this._btnHit.addEventListener('click', this._addHitHandler.bind(this));
         this._btnStay.addEventListener('click', this._addStayHandler.bind(this));
@@ -125,6 +136,11 @@ class Play {
         // Modal events
         this._btnBetCount.addEventListener('click', this._betCountHandler.bind(this));
         this._btnPlaceBet.addEventListener('click', this._placeBetHandler.bind(this));
+
+        //Flash events
+        this._errorClose.addEventListener('click', this._closeMessage.bind(this, 0));
+        this._successClose.addEventListener('click', this._closeMessage.bind(this, 1));
+
     }
 
     // Modal methods
@@ -182,6 +198,38 @@ class Play {
                 this._startPlay();
             }
         }
+    }
+
+    //flash methods
+    _flashMessage(flag = 1) {
+        flag === 1 ? this._successMssgEl.classList.remove('hidden') : this._errorMssgEl.classList.remove('hidden');;
+        this._overlay.classList.remove('hidden');
+    }
+
+    _closeMessage(flag = 1) {
+        flag === 1 ? this._successMssgEl.classList.add('hidden') : this._errorMssgEl.classList.add('hidden');;
+        this._overlay.classList.add('hidden');
+    }
+
+    _autoFlashOff(flash) {
+        setTimeout(() => this._closeMessage(flash), 2500);
+    }
+
+    _showFlash(flag) {
+        this._flashMessage(flag);
+        this._autoFlashOff(flag);
+    }
+
+    _showJackpot() {
+        setTimeout(() => {
+            this._jackpotEl.classList.remove('hidden');
+            this._overlay.classList.remove('hidden');
+            setTimeout(() => {
+                this._jackpotEl.classList.add('hidden');
+                this._overlay.classList.remove('hidden');
+            }, 2500);
+        }, 800);
+
     }
 
     // Main methods
@@ -253,6 +301,7 @@ class Play {
 
         this._chips.looseBet(this._bet);
         console.log(this._chips.chips);
+        setTimeout(() => this._showFlash(0), 1000);
 
         console.log("dealer wins --");
         this._showResult();
@@ -262,6 +311,7 @@ class Play {
 
         this._chips.winBet(this._bet);
         console.log(this._chips.chips);
+        setTimeout(() => this._showFlash(1), 1000);
 
         console.log("player wins --");
         this._showResult();
@@ -269,7 +319,9 @@ class Play {
 
     _jackPot() {
         console.log("Jackpot !!!");
-        this._playerWin();
+        this._chips.winBet(this._bet);
+        this._showJackpot();
+        this._showResult();
     }
 
     _showWithoutFirstCard() {
@@ -287,6 +339,11 @@ class Play {
         view.render(cardArr, valuesArr);
     }
 
+    _playAgain() {
+        this._choice = prompt("Do u wanna play again ? (y/n)");
+        if (this._choice === 'y') this.start();
+    }
+
     _showResult() {
 
         console.log("Dealer");
@@ -299,8 +356,7 @@ class Play {
 
         view.render(cardArr, valuesArr);
 
-        this._choice = prompt("Do u wanna play again ? (y/n)");
-        if (this._choice === 'y') this.start();
+        setTimeout(() => this._playAgain(), 4000);
     }
 
     start() {
@@ -310,6 +366,9 @@ class Play {
         if (this._chips.chips > 0) this._showChipsModal();
 
         if (this._chips.chips <= 0) {
+
+            this._overlay.classList.remove('hidden');
+
             console.log("You loose the game !");
             alert("You loose the game, you dont have any chips for bet !!!");
             this._chips = 0;

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;1,300&display=swap');
+
 :root {
     --primary-color: #FFD700;
     --primary-dark: #ffb302;
@@ -232,4 +234,188 @@ img {
 .chips-btn {
     text-align: center;
     /* border: #d89b0b 1px solid; */
+}
+
+/* //////////////////////////////////////////////////// */
+/* //////////////////////////////////////////////////// */
+
+/* flash message css */
+
+.success_container,
+.jackpot_container {
+    max-height: 100px;
+    max-width: 100%;
+    display: block;
+    position: fixed;
+    top: 40%;
+    left: 36%;
+    color: white;
+    z-index: 200;
+}
+
+.jackpot_container {
+    left: 41%;
+}
+
+.block {
+    display: flex;
+    background-color: #1bb42c;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 0.6rem;
+    border-radius: 1.25rem;
+    border: 0.2rem solid #0e5a0f;
+}
+
+.imager img {
+    width: 65px;
+    height: 70px;
+    margin: 10px;
+    z-index: 1000;
+}
+
+
+.message .head {
+    margin: 10px 10px 0px 10px;
+    z-index: 10000;
+    font-size: 2rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.message p {
+    margin: 0.6rem;
+    z-index: 1000;
+    font-size: 1.8rem;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.undo {
+    padding-bottom: 3rem;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: 100;
+    cursor: pointer;
+}
+
+/* 
+@media(max-width:700px) {
+    .success_container {
+        position: absolute;
+        max-height: 70px;
+        max-width: 70%;
+        left: 50px;
+        color: white;
+        z-index: 10000;
+    }
+
+    .message .head {
+        margin: 10px 10px 0px 10px;
+        font-weight: 600;
+
+        font-size: medium;
+    }
+
+    .message p {
+        font-size: small;
+        margin: 10px;
+    }
+} */
+
+/* Here Success alert is completed */
+.error_container {
+
+    max-height: 100px;
+    max-width: 100%;
+    display: block;
+    position: fixed;
+    top: 40%;
+    left: 36%;
+    color: white;
+    z-index: 200;
+    transition: all 1s;
+    /* margin: 20px; */
+}
+
+.error_block {
+    display: flex;
+    background-color: rgba(217, 4, 41, 0.9);
+    border: 0.2rem solid rgba(150, 9, 32, 0.9);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 0.6rem;
+    border-radius: 1.25rem;
+}
+
+.error_imager img {
+    width: 60px;
+    height: 70px;
+    margin: 10px;
+    z-index: 1000;
+
+}
+
+.error_message .error_head {
+    margin: 10px 10px 0px 10px;
+    z-index: 1000;
+    font-size: 2rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.error_message p {
+    margin: 10px;
+    z-index: 1000;
+    font-size: 1.8rem;
+    font-family: 'Source Code Pro', monospace;
+}
+
+/*
+@media(max-width:700px) {
+    .error_container {
+        position: absolute;
+        max-height: 70px;
+        max-width: 70%;
+        left: 50px;
+        color: white;
+        z-index: 10000;
+    }
+
+    .error .error_head {
+        margin: 10px 10px 0px 10px;
+        font-weight: 600;
+
+        font-size: medium;
+    }
+
+    .error_message p {
+        font-size: small;
+        margin: 10px;
+    }
+}
+
+a {
+    color: #fff
+} */
+
+.overlay-success {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #023047;
+    opacity: 0.6;
+    z-index: 25;
+}
+
+.overlay-error {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #023047;
+    opacity: 0.3;
+    z-index: 25;
 }
