@@ -56,10 +56,6 @@ class Hand {
         this.handValue = this.handValue + cardValues[card.rank];
         console.log("card added", this.handCards, this.handValue);
     }
-
-    // hit(card) {
-    //     this._addCard(card);
-    // }
 }
 
 
@@ -74,11 +70,7 @@ class Chips {
     looseBet(bet) {
         this.chips -= bet;
     }
-    // takeBet() {
-    //     // alert("You have 100 chips in your pocket");
-    //     // let betFromUser = +(prompt("Place your bet"));
-    //     this._showChipsModal();
-    // }
+
 }
 
 
@@ -113,6 +105,17 @@ class Play {
     _totalChipsValue = document.querySelector('.chips-value-total');
     _btnPlaceBet = document.querySelector('.btn-place-bet');
 
+
+    // Quit - prompt btn changed to modal
+    _promptQuitBtn = document.querySelector(".place-quit");
+    _quitChips = document.querySelector(".quit-chips");
+
+    //Custom alert
+    _zeroChipAlertEl = document.querySelector('.chips-0');
+    _greaterAvailableChipsEl = document.querySelector('.more-chips');
+    _btnCloseAlert = document.querySelectorAll('.close-alert');
+
+
     //Flash message
     _successMssgEl = document.querySelector('.success_container');
     _errorMssgEl = document.querySelector('.error_container');
@@ -120,17 +123,10 @@ class Play {
     _successClose = document.querySelector('.success-close');
     _jackpotEl = document.querySelector('.jackpot_container');
 
-    //Prompt
-    // _promptContainer = document.querySelector(".dialog-container");
-    // _promptBetBtn = document.querySelector(".place-bet");
-    // _promptQuitBtn = document.querySelector(".place-quit");
-
-    // prompt btn changed to modal
-    _promptQuitBtn = document.querySelector(".place-quit");
-
 
     //highscore
     _highscoreEl = document.querySelector('.highscore');
+
 
     // guide modal
     _btnGuideOpen = document.querySelector('.guide-open-btn');
@@ -141,13 +137,6 @@ class Play {
     _overlayGameOver = document.querySelector('.overlay-gameover');
     _btnNewGameEl = document.querySelector('.btn-newgame');
 
-
-    //Custom alert
-    _zeroChipAlertEl = document.querySelector('.chips-0');
-    _greaterAvailableChipsEl = document.querySelector('.more-chips');
-    _btnCloseAlert = document.querySelectorAll('.close-alert');
-
-
     //gameover flash
     _quitGameFlashEl = document.querySelector('.quit-game');
     _looseGameFlashEl = document.querySelector('.loose-game');
@@ -156,17 +145,10 @@ class Play {
     _welcomeChipsEl = document.querySelector('.welcome_chips');
 
 
-    // Audio
-    // _won = new Audio('success.mp3');
-    // _won = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
-    // _won = new Howl({
-    //     urls: ['success.mp3']
-    // });
 
     constructor() {
 
-        // this._won.play();
-
+        // Main events
         this._btnHit.addEventListener('click', this._addHitHandler.bind(this));
         this._btnStay.addEventListener('click', this._addStayHandler.bind(this));
 
@@ -174,13 +156,15 @@ class Play {
         this._btnBetCount.addEventListener('click', this._betCountHandler.bind(this));
         this._btnPlaceBet.addEventListener('click', this._placeBetHandler.bind(this));
 
+        //Quit event
+        this._promptQuitBtn.addEventListener('click', this._promptQuit.bind(this));
+
+        this._btnCloseAlert.forEach(element => element.addEventListener('click', this._closeAlert.bind(this)));
+
         //Flash events
         this._errorClose.addEventListener('click', this._closeMessage.bind(this, 0));
         this._successClose.addEventListener('click', this._closeMessage.bind(this, 1));
 
-        //Prompt events
-        // this._promptBetBtn.addEventListener('click', this._promptPlaceBet.bind(this));
-        this._promptQuitBtn.addEventListener('click', this._promptQuit.bind(this));
 
         // guide button event
         this._btnGuide.addEventListener('click', this._closeGuideModal.bind(this));
@@ -188,12 +172,10 @@ class Play {
         // window.addEventListener ('load', this._openGuideModal.bind(this));
         // window.onload = (event) => this._openGuideModal.bind(this);
 
+        // newgame event
         this._btnNewGameEl.addEventListener('click', this._reload.bind(this));
         // this._gameOverEl.querySelector('img').style.top = '-60%';
         // this._gameOverEl.querySelector('.btn-newgame').style.top = '170%';
-
-        this._btnCloseAlert.forEach(element => element.addEventListener('click', this._closeAlert.bind(this)));
-
 
         // geting highscore from browser
         this._getHighscore();
@@ -237,16 +219,31 @@ class Play {
     }
 
     // Gameover
-    _reload() {
-        location.reload();
-    }
-
     _gameOver() {
         this._gameOverEl.classList.remove('hidden');
         this._overlayGameOver.classList.remove('hidden');
 
         this._gameOverEl.querySelector('img').style.top = '40%';
         this._gameOverEl.querySelector('.btn-newgame').style.top = '70%';
+    }
+
+    // Loose game method
+    _looseGame() {
+        this._overlay.classList.remove('hidden');
+
+        this._looseGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
+        this._looseGameFlashEl.classList.remove('hidden');
+
+        setTimeout(() => {
+            this._looseGameFlashEl.classList.add('hidden');
+            this._looseGameFlashEl.style.animation = 'none';
+
+            this._gameOver();
+        }, 3000);
+    }
+
+    _reload() {
+        location.reload();
     }
 
     // Getting highscore from localstorage
@@ -269,41 +266,9 @@ class Play {
         this._guideModalEl.style.opacity = 0;
     }
 
-    // Prompt methods
-    // _openPrompt() {
-    //     this._promptContainer.style.top = "50%";
-    //     this._promptContainer.style.opacity = 1;
-    //     this._overlay.classList.remove('hidden');
-    // }
-    // _closePrompt() {
-    //     this._promptContainer.style.top = "-50%";
-    //     this._promptContainer.style.opacity = 0;
-    //     this._overlay.classList.add('hidden');
-    // }
-
-    // _promptPlaceBet() {
-    //     // this._choice = 'y';
-    //     this._closePrompt();
-    //     this.start();
-    // }
-
-    _looseGame() {
-        this._overlay.classList.remove('hidden');
-
-        this._looseGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
-        this._looseGameFlashEl.classList.remove('hidden');
-
-        setTimeout(() => {
-            this._looseGameFlashEl.classList.add('hidden');
-            this._looseGameFlashEl.style.animation = 'none';
-
-            this._gameOver();
-        }, 3000);
-    }
+    //Quit Method
 
     _promptQuit() {
-        // this._choice = 'n';
-        // this._closePrompt();
         this._closeChipsModal();
         this._overlay.classList.remove('hidden');
 
@@ -313,6 +278,7 @@ class Play {
             localStorage.setItem('highscore', this._highscore);
         }
 
+        this._quitChips.textContent = this._chips.chips + '$';
         this._quitGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
         this._quitGameFlashEl.classList.remove('hidden');
 
@@ -324,8 +290,8 @@ class Play {
         }, 2500);
     }
 
-    // Modal methods
 
+    // Modal methods
     _clearChips() {
         this._count = 0;
         this._totalChipsValue.textContent = 0;
@@ -384,6 +350,7 @@ class Play {
             }
         }
     }
+
 
     //flash methods
     _flashMessage(flag = 1) {
@@ -542,12 +509,6 @@ class Play {
 
         view.render(cardArr, valuesArr);
     }
-
-    // _playAgain() {
-    //     // this._choice = prompt("Do u wanna play again ? (y/n)");
-    //     this._openPrompt();
-    //     // if (this._choice === 'y') this.start();
-    // }
 
     _showResult() {
 
