@@ -8,34 +8,40 @@
     <title>BlackJack</title>
     <link rel="stylesheet" href="/src/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-</head>
 
 <body>
+
+    <div class="guide-icon">
+        <div class="btn guide-image">
+            <img class='guide-open-btn' src="https://img.icons8.com/color/48/000000/help--v1.png" />
+        </div>
+    </div>
+
+    <div class="highscore-container">
+        <div class="highscore-image">
+            <img src="https://img.icons8.com/arcade/64/000000/experimental-trophy-arcade.png" />
+        </div>
+        <div class="highscore">0</div>
+    </div>
+
     <div class="main-container">
         <div class="container">
             <div class="play-container dealer-container">
                 <div class="cards-container-dealer">
-                    <!-- <img src="/src/img/cards/ace_of_hearts.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/ace_of_clubs.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/ace_of_diamonds.png" alt="Card" class="single-card"> -->
+                    <!-- <img src="/src/img/cards/ace_of_hearts.png" alt="Card" class="single-card">-->
                 </div>
 
             </div>
 
             <div class="status-container">
-                <button class="btn btn-stay">Stay</button>
-                <!-- <img src="/src/img/chips/chipRedWhite_sideBorder.png" alt="Chip" class="center-chip"> -->
-                <button class="btn btn-hit">Hit</button>
+                <button class="btn btn-main btn-stay">STAY</button>
+                <img src="/src/img/card_with_casino.png" alt="Chip" class="center-chip">
+                <button class="btn btn-main btn-hit">HIT</button>
             </div>
 
             <div class="play-container player-container">
                 <div class="cards-container-player">
-                    <!-- <img src="/src/img/cards/jack_of_clubs.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/jack_of_hearts.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/jack_of_hearts.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card">
-                    <img src="/src/img/cards/jack_of_spades.png" alt="Card" class="single-card"> -->
+                    <!-- <img src="/src/img/cards/jack_of_clubs.png" alt="Card" class="single-card">-->
                 </div>
             </div>
         </div>
@@ -43,7 +49,7 @@
         <div class="score">
             <div class="score-content">
                 <div class="card-sum">
-                    <span class="sum-amount dealer-sum-amount"> 8 </span>
+                    <span class="sum-amount dealer-sum-amount">8</span>
                 </div>
                 <!-- <img src="/src/img/back_card_blue.png" class="back-card" alt="deck of cards"> -->
                 <div class="card-sum">
@@ -54,9 +60,9 @@
     </div>
 
     <div class="overlay hidden"></div>
+    <div class="overlay-gameover hidden"></div>
 
     <div class="chips-container hidden">
-        <!-- <button class="btn--close-modal">&times;</button> -->
 
         <p class="chips-modal-p">Your Chips - <span class="available-chips">10</span></p>
 
@@ -74,7 +80,43 @@
 
         <div class="chips-value-total">0</div>
 
-        <button class="btn-place-bet">place the bet !</button>
+        <div class="modal-btns">
+            <button class="btn btn-place-bet">Place the bet !</button>
+            <button class="btn btn-modal-quit place-quit">Quit</button>
+        </div>
+
+    </div>
+
+    <!-- how to play modal -->
+
+    <div class="guide-container hidden">
+
+        <p class="guide-header"></p>
+        <p class="guide-message">This game works with 2 players
+            One is the player and other one is dealer which is the computer itself.
+            You have to place bet first.</p>
+
+        <p class="guide-header">Initial setup</p>
+        <p class="guide-message">Player gets two cards with 2 values initially.
+            Total value is the sum of values in two cards.
+            Dealer also gets 2 cards in which one card value is hidden.
+            Now we know the total value of player and one of the values of dealer </p>
+
+        <p class="guide-header">Gameplay</p>
+        <p class="guide-message">Player has the choice to hit or stay
+            Hit indicates player wants another card
+            Stay indicates player don't want another card and passes the chance to dealer.
+        </p>
+
+        <p class="guide-header">Win/Fail conditions</p>
+        <p class="guide-message">If the card total is greater than 21 you fail
+            If your card total is closer to 21 but greater than the dealer you win
+            If your card total is closer to 21 but less than the dealer you fail</p>
+
+        <p class="guide-header">Jackpot</p>
+        <p class="guide-message">If card total is exact 21 you win</p>
+
+        <div class="btn btn-guide"><button class="btn-guide-modal">Let's Play</button></div>
     </div>
 
     <!-- Flash message -->
@@ -125,6 +167,89 @@
         </div>
     </div>
 
+    <div class="loose-game hidden">
+        <div class="loose_block">
+            <div class="error_imager">
+                <img
+                    src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-failure-achievements-flaticons-lineal-color-flat-icons-2.png" />
+            </div>
+            <div class="error_message">
+                <p class="error_head">You lost Game</p>
+                <p>Your available chips is 0</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="quit-game hidden">
+        <div class="quit_block">
+            <div class="error_imager">
+                <img src="https://img.icons8.com/bubbles/50/000000/money-bag.png" />
+            </div>
+            <div class="error_message">
+                <p class="error_head">Well done</p>
+                <p>You earned <span class="quit-chips">0<span></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-container">
+        <div class="dialog-header">Are you placing the bet ?</div>
+        <div class="dialog-body">If you quit you can take the money and leave <br>
+
+            Or you can continue with placing bet.
+        </div>
+        <div class='btns'>
+            <div class="dialog-footer">
+                <a class="place-bet"> BET</a>
+            </div>
+            <div class="dialog-footer">
+                <a class="place-quit">QUIT</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="alert-box chips-0 hidden">
+        <div class="alert-message">
+            Please select your chips for the bet.
+        </div><!-- .alert-message -->
+        <div class="alert-buttons">
+            <a class="close-alert" href="#">Ok</a>
+        </div><!-- .alert-buttons -->
+    </div><!-- .alert-box -->
+
+    <div class="alert-box more-chips hidden">
+        <div class="alert-message">
+            your bet amount is more than your available chips.
+        </div><!-- .alert-message -->
+        <div class="alert-buttons">
+            <a class="close-alert" href="#">Ok</a>
+        </div><!-- .alert-buttons -->
+    </div><!-- .alert-box -->
+
+    <div class="welcome_chips hidden">
+        <div class="block">
+            <div class="imager">
+                <img src="https://img.icons8.com/fluency/48/000000/average-2.png" />
+            </div>
+            <div class="message">
+                <p class="head">🎉️ You Got 100💲️ Chips</p>
+            </div>
+            <div class="undo success-close">&times;</div>
+        </div>
+    </div>
+
+
+    <div class="gameover-container hidden">
+        <img src="/src/img/gameover.png" alt="gameover">
+        <button class="btn-newgame">New Game</button>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.js"
+        integrity="sha512-dMiBqqEV5i3KqpAdsgQSSZ72DnNib7otY0X+b/Tnn1EmLym1dxuZ19csdZqBnfDniKd9bmNtzStQzuMrIa5Ngw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" defer src="/src/js/script.js"></script>
 </body>
 

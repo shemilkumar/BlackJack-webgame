@@ -14,16 +14,14 @@ class Deck {
     _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
     _ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 
-    // Jackpot check
     // _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-    // _ranks = ['2', 'king', 'ace'];
+    // _ranks = ['ace',];
 
     _createCard = (suitsValue, ranksValue) => ({ suit: suitsValue, rank: ranksValue });
 
     _allCards = [].concat.apply([], this._suits.map(s => this._ranks.map(r => this._createCard(s, r))));
 
     constructor() {
-        // this._cardMaking();
         this._shuffle();
     }
 
@@ -44,7 +42,7 @@ class Deck {
     }
 
     deal() {
-        return this._allCardsShuffled.pop(0);
+        return this._allCardsShuffled.pop();
     }
 }
 
@@ -53,21 +51,15 @@ class Hand {
     handCards = [];
     handValue = 0;
 
-    _addCard(card) {
+    hit(card) {
         this.handCards.push(card);
         this.handValue = this.handValue + cardValues[card.rank];
-    }
-
-    hit(card) {
-        this._addCard(card);
         console.log("card added", this.handCards, this.handValue);
     }
 
-    stay(card) {
-        while (this.handValue < 17)
-            this._addCard(card);
-
-    }
+    // hit(card) {
+    //     this._addCard(card);
+    // }
 }
 
 
@@ -105,15 +97,16 @@ class Play {
     _bet;
     _choice;
     _round = 0;
+    _highscore;
 
     // Main Elements
     _btnStay = document.querySelector('.btn-stay');
     _btnHit = document.querySelector('.btn-hit');
+    _overlay = document.querySelector('.overlay');
 
-    // Modal elements
+    // Chips Modal elements
     _count = 0;
     _chipsContainerEl = document.querySelector('.chips-container');
-    _overlay = document.querySelector('.overlay');
 
     _btnBetCount = document.querySelector('.chips-btn');
     _availableChips = document.querySelector('.available-chips');
@@ -127,8 +120,52 @@ class Play {
     _successClose = document.querySelector('.success-close');
     _jackpotEl = document.querySelector('.jackpot_container');
 
+    //Prompt
+    // _promptContainer = document.querySelector(".dialog-container");
+    // _promptBetBtn = document.querySelector(".place-bet");
+    // _promptQuitBtn = document.querySelector(".place-quit");
+
+    // prompt btn changed to modal
+    _promptQuitBtn = document.querySelector(".place-quit");
+
+
+    //highscore
+    _highscoreEl = document.querySelector('.highscore');
+
+    // guide modal
+    _btnGuideOpen = document.querySelector('.guide-open-btn');
+    _btnGuide = document.querySelector('.btn-guide-modal');
+    _guideModalEl = document.querySelector('.guide-container');
+
+    _gameOverEl = document.querySelector('.gameover-container');
+    _overlayGameOver = document.querySelector('.overlay-gameover');
+    _btnNewGameEl = document.querySelector('.btn-newgame');
+
+
+    //Custom alert
+    _zeroChipAlertEl = document.querySelector('.chips-0');
+    _greaterAvailableChipsEl = document.querySelector('.more-chips');
+    _btnCloseAlert = document.querySelectorAll('.close-alert');
+
+
+    //gameover flash
+    _quitGameFlashEl = document.querySelector('.quit-game');
+    _looseGameFlashEl = document.querySelector('.loose-game');
+
+    //welcome
+    _welcomeChipsEl = document.querySelector('.welcome_chips');
+
+
+    // Audio
+    // _won = new Audio('success.mp3');
+    // _won = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
+    // _won = new Howl({
+    //     urls: ['success.mp3']
+    // });
+
     constructor() {
 
+        // this._won.play();
 
         this._btnHit.addEventListener('click', this._addHitHandler.bind(this));
         this._btnStay.addEventListener('click', this._addStayHandler.bind(this));
@@ -141,6 +178,150 @@ class Play {
         this._errorClose.addEventListener('click', this._closeMessage.bind(this, 0));
         this._successClose.addEventListener('click', this._closeMessage.bind(this, 1));
 
+        //Prompt events
+        // this._promptBetBtn.addEventListener('click', this._promptPlaceBet.bind(this));
+        this._promptQuitBtn.addEventListener('click', this._promptQuit.bind(this));
+
+        // guide button event
+        this._btnGuide.addEventListener('click', this._closeGuideModal.bind(this));
+        this._btnGuideOpen.addEventListener('click', this._openGuideModal.bind(this));
+        // window.addEventListener ('load', this._openGuideModal.bind(this));
+        // window.onload = (event) => this._openGuideModal.bind(this);
+
+        this._btnNewGameEl.addEventListener('click', this._reload.bind(this));
+        // this._gameOverEl.querySelector('img').style.top = '-60%';
+        // this._gameOverEl.querySelector('.btn-newgame').style.top = '170%';
+
+        this._btnCloseAlert.forEach(element => element.addEventListener('click', this._closeAlert.bind(this)));
+
+
+        // geting highscore from browser
+        this._getHighscore();
+    }
+
+    //welcome
+    _welcome() {
+        this._welcomeChipsEl.classList.remove('hidden');
+        this._overlay.classList.remove('hidden');
+
+        setTimeout(() => {
+            this._welcomeChipsEl.classList.add('hidden');
+            this._overlay.classList.add('hidden');
+        }, 1500);
+    }
+
+    //Alert
+    _closeAlert() {
+        this._zeroChipAlertEl.classList.add('hidden');
+        this._greaterAvailableChipsEl.classList.add('hidden');
+
+        this._overlay.classList.add('hidden');
+
+        this._showChipsModal();
+    }
+
+    _openAlertZeroChip() {
+        this._zeroChipAlertEl.classList.remove('hidden');
+
+        this._closeChipsModal();
+
+        this._overlay.classList.remove('hidden');
+    }
+
+    _openAlertGreaterAvailChips() {
+        this._greaterAvailableChipsEl.classList.remove('hidden');
+
+        this._closeChipsModal();
+
+        this._overlay.classList.remove('hidden');
+    }
+
+    // Gameover
+    _reload() {
+        location.reload();
+    }
+
+    _gameOver() {
+        this._gameOverEl.classList.remove('hidden');
+        this._overlayGameOver.classList.remove('hidden');
+
+        this._gameOverEl.querySelector('img').style.top = '40%';
+        this._gameOverEl.querySelector('.btn-newgame').style.top = '70%';
+    }
+
+    // Getting highscore from localstorage
+    _getHighscore() {
+        if (localStorage.getItem('highscore') === null) this._highscore = 0;
+        else {
+            this._highscoreEl.textContent = localStorage.getItem('highscore');
+            this._highscore = +(localStorage.getItem('highscore'));
+        }
+    }
+
+    // Guide methods
+    _openGuideModal() {
+        this._guideModalEl.classList.remove('hidden');
+        this._guideModalEl.style.opacity = 1;
+    }
+
+    _closeGuideModal() {
+        this._guideModalEl.classList.add('hidden');
+        this._guideModalEl.style.opacity = 0;
+    }
+
+    // Prompt methods
+    // _openPrompt() {
+    //     this._promptContainer.style.top = "50%";
+    //     this._promptContainer.style.opacity = 1;
+    //     this._overlay.classList.remove('hidden');
+    // }
+    // _closePrompt() {
+    //     this._promptContainer.style.top = "-50%";
+    //     this._promptContainer.style.opacity = 0;
+    //     this._overlay.classList.add('hidden');
+    // }
+
+    // _promptPlaceBet() {
+    //     // this._choice = 'y';
+    //     this._closePrompt();
+    //     this.start();
+    // }
+
+    _looseGame() {
+        this._overlay.classList.remove('hidden');
+
+        this._looseGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
+        this._looseGameFlashEl.classList.remove('hidden');
+
+        setTimeout(() => {
+            this._looseGameFlashEl.classList.add('hidden');
+            this._looseGameFlashEl.style.animation = 'none';
+
+            this._gameOver();
+        }, 3000);
+    }
+
+    _promptQuit() {
+        // this._choice = 'n';
+        // this._closePrompt();
+        this._closeChipsModal();
+        this._overlay.classList.remove('hidden');
+
+        if (this._highscore < this._chips.chips) {
+            this._highscoreEl.textContent = this._chips.chips;
+            this._highscore = this._chips.chips;
+            localStorage.setItem('highscore', this._highscore);
+        }
+
+        this._quitGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
+        this._quitGameFlashEl.classList.remove('hidden');
+
+        setTimeout(() => {
+            this._quitGameFlashEl.classList.add('hidden');
+            this._quitGameFlashEl.style.animation = 'none';
+
+            this._gameOver();
+        }, 2500);
     }
 
     // Modal methods
@@ -156,9 +337,13 @@ class Play {
 
         this._chipsContainerEl.classList.remove('hidden');
         this._overlay.classList.remove('hidden');
+
+        this._chipsContainerEl.style.top = '50%';
     }
 
     _closeChipsModal() {
+        this._chipsContainerEl.style.top = '150%';
+
         this._chipsContainerEl.classList.add('hidden');
         this._overlay.classList.add('hidden');
     }
@@ -181,12 +366,12 @@ class Play {
 
         let betFromUser = +(this._totalChipsValue.textContent);
 
-        if (betFromUser === 0) alert("Please select your chips for the bet");
+        if (betFromUser === 0) this._openAlertZeroChip();
 
         if (betFromUser > 0) {
 
             if (betFromUser > this._chips.chips) {
-                alert("your bet amount is more than your available chips");
+                this._openAlertGreaterAvailChips();
                 this._clearChips();
             }
 
@@ -202,17 +387,30 @@ class Play {
 
     //flash methods
     _flashMessage(flag = 1) {
-        flag === 1 ? this._successMssgEl.classList.remove('hidden') : this._errorMssgEl.classList.remove('hidden');;
+        if (flag === 1) {
+            this._successMssgEl.style.animation = 'flashanime 1s 1 ease-in-out';
+            this._successMssgEl.classList.remove('hidden');
+        } else {
+            this._errorMssgEl.style.animation = 'flashanime 1s 1 ease-in-out';
+            this._errorMssgEl.classList.remove('hidden');
+        }
         this._overlay.classList.remove('hidden');
     }
 
     _closeMessage(flag = 1) {
-        flag === 1 ? this._successMssgEl.classList.add('hidden') : this._errorMssgEl.classList.add('hidden');;
+        // flag === 1 ? this._successMssgEl.classList.add('hidden') : this._errorMssgEl.classList.add('hidden');;
+        if (flag === 1) {
+            this._successMssgEl.classList.add('hidden');
+            this._successMssgEl.style.animation = 'none';
+        } else {
+            this._errorMssgEl.classList.add('hidden');
+            this._errorMssgEl.style.animation = 'none';
+        }
         this._overlay.classList.add('hidden');
     }
 
     _autoFlashOff(flash) {
-        setTimeout(() => this._closeMessage(flash), 2500);
+        setTimeout(() => this._closeMessage(flash), 2000);
     }
 
     _showFlash(flag) {
@@ -222,12 +420,14 @@ class Play {
 
     _showJackpot() {
         setTimeout(() => {
+            this._jackpotEl.style.animation = 'flashanime 1s 1 ease-in-out';
             this._jackpotEl.classList.remove('hidden');
             this._overlay.classList.remove('hidden');
             setTimeout(() => {
                 this._jackpotEl.classList.add('hidden');
                 this._overlay.classList.remove('hidden');
-            }, 2500);
+                this._jackpotEl.style.animation = 'none';
+            }, 2300);
         }, 800);
 
     }
@@ -242,7 +442,8 @@ class Play {
     }
 
     _addStayHandler() {
-        this._dealer.stay(this._deck.deal());
+        while (this._dealer.handValue < 17)
+            this._dealer.hit(this._deck.deal());
         this._stayCheck();
     }
 
@@ -266,7 +467,7 @@ class Play {
         this._showWithoutFirstCard();
 
         this._player.handValue === 21 ? this._jackPot() : '';
-        this._player.handValue > 21 ? this._playerWin() : '';
+        this._player.handValue > 21 ? this._dealerWin() : '';
     }
 
 
@@ -284,22 +485,24 @@ class Play {
 
         if (this._dealer.handValue < 22) {
 
-            if (this._dealer.handValue > this._player.handValue) {
-                this._dealerWin();
-            }
+            if (this._dealer.handValue > this._player.handValue) this._dealerWin();
             else {
                 while (this._dealer.handValue <= this._player.handValue)
                     this._dealer.hit(this._deck.deal());
 
                 this._hitCheck(true);
             }
-        }
-        else this._playerWin();
+        } else this._playerWin();
     }
 
     _dealerWin() {
 
         this._chips.looseBet(this._bet);
+        // console.log(view._dealerElement);
+        // view._dealerValueEl.closest('.card-sum').style.color = '#fff';
+        // view._dealerValueEl.closest('.card-sum').style.backgroundColor = 'rgb(12, 143, 12)';
+        // view._dealerValueEl.closest('.card-sum').style.border = '3px solid greenyellow';
+
         console.log(this._chips.chips);
         setTimeout(() => this._showFlash(0), 1000);
 
@@ -312,6 +515,7 @@ class Play {
         this._chips.winBet(this._bet);
         console.log(this._chips.chips);
         setTimeout(() => this._showFlash(1), 1000);
+        // this._won.play();
 
         console.log("player wins --");
         this._showResult();
@@ -339,24 +543,25 @@ class Play {
         view.render(cardArr, valuesArr);
     }
 
-    _playAgain() {
-        this._choice = prompt("Do u wanna play again ? (y/n)");
-        if (this._choice === 'y') this.start();
-    }
+    // _playAgain() {
+    //     // this._choice = prompt("Do u wanna play again ? (y/n)");
+    //     this._openPrompt();
+    //     // if (this._choice === 'y') this.start();
+    // }
 
     _showResult() {
 
         console.log("Dealer");
-        console.log(this._dealer.handCards, this._dealer.handValue);
+        // console.log(this._dealer.handCards, this._dealer.handValue);
         console.log("Player");
-        console.log(this._player.handCards, this._player.handValue);
+        // console.log(this._player.handCards, this._player.handValue);
 
         const cardArr = [this._player.handCards, this._dealer.handCards];
         const valuesArr = [this._player.handValue, this._dealer.handValue];
 
         view.render(cardArr, valuesArr);
 
-        setTimeout(() => this._playAgain(), 4000);
+        setTimeout(() => this.start(), 3000);
     }
 
     start() {
@@ -370,7 +575,9 @@ class Play {
             this._overlay.classList.remove('hidden');
 
             console.log("You loose the game !");
-            alert("You loose the game, you dont have any chips for bet !!!");
+            // alert("You loose the game, you dont have any chips for bet !!!");
+            setTimeout(() => this._looseGame(), 500);
+
             this._chips = 0;
             return;
         }
