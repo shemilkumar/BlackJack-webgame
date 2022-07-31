@@ -101,6 +101,10 @@ class Play {
     _round = 0;
     _highscore;
 
+    // Starting the game - game open
+    _btnGameOpen = document.querySelector('.btn-game-open');
+    _gameOpenEl = document.querySelector('.gameopen-container')
+
     // Main Elements
     _btnStay = document.querySelector('.btn-stay');
     _btnHit = document.querySelector('.btn-hit');
@@ -161,6 +165,14 @@ class Play {
 
     constructor() {
 
+        // Game opening
+        setTimeout(() => {
+            this._gameOpenEl.querySelector('img').style.left = '50%';
+            this._gameOpenEl.querySelector('.btn-game-open').style.left = '50%';
+        }, 1000);
+
+        this._btnGameOpen.addEventListener('click', this.gameOpen.bind(this));
+
         // Main events
         this._btnHit.addEventListener('click', this._addHitHandler.bind(this));
         this._btnStay.addEventListener('click', this._addStayHandler.bind(this));
@@ -194,6 +206,18 @@ class Play {
 
         // geting highscore from browser
         this._getHighscore();
+    }
+
+    //gameOpen method
+    gameOpen() {
+        this._gameOpenEl.querySelector('img').style.left = '-50%';
+        this._gameOpenEl.querySelector('.btn-game-open').style.left = '150%';
+
+        setTimeout(() => {
+            this._gameOpenEl.classList.add('hidden');
+            setTimeout(() => this.start(), 400);
+        }, 350);
+
     }
 
     //welcome
@@ -562,7 +586,6 @@ class Play {
 
 const game = function () {
     const play = new Play();
-    play.start();
 }
 
 game();

@@ -148,3 +148,12 @@ body {
 .btn-newgame {
     width: 40%;
 }
+
+.gameopen-container img {
+    width: 80%;
+    height: 30%;
+}
+
+.btn-game-open {
+    width: 60%;
+}

@@ -680,9 +680,10 @@ img {
 /* //////////////////////////////////////////////
 /* /////////////////////////////////////////// */
 
-/* /////////////////////////////////////////////  Game over  /////////////////////////////////////// */
+/* ///////////////////////////////////////////// Game open & Game over  /////////////////////////////////////// */
 
-.gameover-container {
+.gameover-container,
+.gameopen-container {
     position: fixed;
     width: 70%;
     height: 80%;
@@ -698,7 +699,8 @@ img {
     z-index: 50;
 }
 
-.gameover-container img {
+.gameover-container img,
+.gameopen-container img {
     width: 50%;
     height: 50%;
     top: -60%;
@@ -709,7 +711,13 @@ img {
     transition: all 0.3s linear 0s;
 }
 
-.btn-newgame {
+.gameopen-container img {
+    top: 40%;
+    left: -50%;
+}
+
+.btn-newgame,
+.btn-game-open {
     position: absolute;
     top: 170%;
     left: 50%;
@@ -724,4 +732,17 @@ img {
 
     transform: translateX(-50%) translateY(-50%);
     transition: all 0.3s linear 0s;
+}
+
+.btn-game-open {
+    top: 70%;
+    left: 150%;
+}
+
+.gameopen-container {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .8)), url('/src/img/bgd_menu.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
