@@ -4,7 +4,7 @@ import view from "./view.js";
 
 const cardValues = {
     '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'jack': 10,
-    'queen': 10, 'king': 10, 'ace': 11,
+    'queen': 10, 'king': 10,
 };
 
 class Deck {
@@ -52,9 +52,19 @@ class Hand {
     handValue = 0;
 
     hit(card) {
-        this.handCards.push(card);
-        this.handValue = this.handValue + cardValues[card.rank];
-        console.log("card added", this.handCards, this.handValue);
+
+        if (card.rank === 'ace') {
+
+            this.handCards.push(card);
+
+            if (this.handValue > 10) this.handValue = this.handValue + 1;
+            if (this.handValue <= 10) this.handValue = this.handValue + 11;
+        }
+        else {
+            this.handCards.push(card);
+            this.handValue = this.handValue + cardValues[card.rank];
+            console.log("card added", this.handCards, this.handValue);
+        }
     }
 }
 
@@ -132,10 +142,13 @@ class Play {
     _btnGuideOpen = document.querySelector('.guide-open-btn');
     _btnGuide = document.querySelector('.btn-guide-modal');
     _guideModalEl = document.querySelector('.guide-container');
+    _closeGuideModalEl = document.querySelector('.close-guide-modal');
 
+    // Game Over
     _gameOverEl = document.querySelector('.gameover-container');
     _overlayGameOver = document.querySelector('.overlay-gameover');
     _btnNewGameEl = document.querySelector('.btn-newgame');
+
 
     //gameover flash
     _quitGameFlashEl = document.querySelector('.quit-game');
@@ -167,7 +180,9 @@ class Play {
 
 
         // guide button event
-        this._btnGuide.addEventListener('click', this._closeGuideModal.bind(this));
+        [this._btnGuide, this._closeGuideModalEl].forEach(element =>
+            element.addEventListener('click', this._closeGuideModal.bind(this)));
+
         this._btnGuideOpen.addEventListener('click', this._openGuideModal.bind(this));
         // window.addEventListener ('load', this._openGuideModal.bind(this));
         // window.onload = (event) => this._openGuideModal.bind(this);

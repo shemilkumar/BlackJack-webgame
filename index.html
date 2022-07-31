@@ -9,6 +9,10 @@
     <title>BlackJack</title>
 
     <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" media="screen and (max-width: 1600px)" href="/src/css/laptop.css">
+    <link rel="stylesheet" media="screen and (max-width: 1300px)" href="/src/css/tablet.css">
+    <link rel="stylesheet" media="screen and (max-width: 600px)" href="/src/css/mobile.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 </head>
@@ -39,7 +43,7 @@
 
             <div class="status-container">
                 <button class="btn btn-main btn-stay">STAY</button>
-                <img src="/src/img/card_with_casino.png" alt="Chip" class="center-chip">
+                <img class="center-image" src="/src/img/card_with_casino.png" alt="Chip" class="center-chip">
                 <button class="btn btn-main btn-hit">HIT</button>
             </div>
 
@@ -95,32 +99,75 @@
 
     <div class="guide-container hidden">
 
-        <p class="guide-header"></p>
-        <p class="guide-message">This game works with 2 players
-            One is the player and other one is dealer which is the computer itself.
-            You have to place bet first.</p>
+        <div class="close-guide">
+            <div class="close-guide-modal">&times;</div>
+        </div>
 
-        <p class="guide-header">Initial setup</p>
-        <p class="guide-message">Player gets two cards with 2 values initially.
-            Total value is the sum of values in two cards.
-            Dealer also gets 2 cards in which one card value is hidden.
-            Now we know the total value of player and one of the values of dealer </p>
+        <div class="m4">
+            <p class="guide-header">Card Values</p>
 
-        <p class="guide-header">Gameplay</p>
-        <p class="guide-message">Player has the choice to hit or stay
-            Hit indicates player wants another card
-            Stay indicates player don't want another card and passes the chance to dealer.
-        </p>
+            <div class="guide-image-card-values">
+                <img src="/src/img/Blackjack_cards_values.png" alt="">
+            </div>
 
-        <p class="guide-header">Win/Fail conditions</p>
-        <p class="guide-message">If the card total is greater than 21 you fail
-            If your card total is closer to 21 but greater than the dealer you win
-            If your card total is closer to 21 but less than the dealer you fail</p>
+            <p class=" guide-header ">Welcome Reward</p>
+            <p class="guide-message">You will get 100$ chips points for playing 🎊️</p>
 
-        <p class="guide-header">Jackpot</p>
-        <p class="guide-message">If card total is exact 21 you win</p>
+            <div class="welcome_chips">
+                <div class="block">
+                    <div class="imager welcome-imager">
+                        <img src="https://img.icons8.com/fluency/48/000000/average-2.png" />
+                    </div>
+                    <div class="message">
+                        <p class="head">🎉️ You Got 100💲️ Chips</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="btn btn-guide"><button class="btn-guide-modal">Let's Play</button></div>
+            <p class="guide-header"></p>
+            <p class="guide-message">
+                <!-- This game works with 2 players
+            One is the player and other one is dealer which is the computer itself. -->
+                You have to place bet first. <br>
+            </p>
+
+            <p class="guide-header">Initial setup</p>
+            <p class="guide-message">
+                > Player gets two cards with 2 values initially. <br>
+                > Dealer also gets 2 cards in which first card is hidden.</p>
+
+            <div class="guide-image-card-hidden">
+                <img src="/src/img/cardHide.png" alt="">
+            </div>
+
+            <p class="guide-message .points">
+                > Total value is the sum of values in two cards. <br> <br>
+                <!-- Now we know the total value of player and one of the values of dealer -->
+            </p>
+
+            <p class="guide-header">Gameplay</p>
+            <p class="guide-message">Player has the choice to <span class="guide-highlight">HIT </span> or <span
+                    class="guide-highlight">STAY</span> <br> <br>
+                <span class="guide-highlight">HIT </span> indicates player wants another card. <br>
+                <span class="guide-highlight">STAY</span> indicates player don't want another card and passes the chance
+                to
+                dealer. <br>
+            </p> <br>
+
+            <p class="guide-header">Win/Fail conditions</p>
+            <p class="guide-message"> <span class="guide-loose"> Card total is greater than 21, you fail 🚫️
+                </span><br>
+                <span class="guide-loose">If your card total is closer to 21 but less than the dealer, you fail
+                    🚫️</span><br><br>
+                <span class="guide-win">If your card total is closer to 21 but greater than the dealer you win
+                    🎊️</span>
+            </p>
+
+            <p class="guide-header">Jackpot</p>
+            <p class="guide-message"><span class="guide-win">If card total is exact 21 you win</span></p>
+
+            <div class="btn btn-guide"><button class="btn-guide-modal">Let's Play</button></div>
+        </div>
     </div>
 
     <!-- Flash message -->
@@ -196,7 +243,7 @@
         </div>
     </div>
 
-    <div class="welcome_chips hidden">
+    <!-- <div class="welcome_chips hidden">
         <div class="block">
             <div class="imager">
                 <img src="https://img.icons8.com/fluency/48/000000/average-2.png" />
@@ -206,7 +253,7 @@
             </div>
             <div class="undo success-close">&times;</div>
         </div>
-    </div>
+    </div> -->
 
     <div class="alert-box chips-0 hidden">
         <div class="alert-message">

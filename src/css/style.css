@@ -13,6 +13,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-size: 2rem;
     height: 100vh;
@@ -413,9 +414,9 @@ img {
     /*animation: flashanime 0.8s alternate infinite ease-in;*/
 }
 
-.jackpot_container {
+/* .jackpot_container {
     left: 41%;
-}
+} */
 
 .block {
     width: 100%;
@@ -479,30 +480,6 @@ img {
     color: rgb(255, 255, 255);
 }
 
-
-/* 
-@media(max-width:700px) {
-    .success_container {
-        position: absolute;
-        max-height: 70px;
-        max-width: 70%;
-        left: 50px;
-        color: white;
-        z-index: 10000;
-    }
-
-    .message .head {
-        margin: 10px 10px 0px 10px;
-        font-weight: 600;
-
-        font-size: medium;
-    }
-
-    .message p {
-        font-size: small;
-        margin: 10px;
-    }
-} */
 /* //////////////////////////////////////////
 ///////////////////////////////////////// */
 
@@ -563,7 +540,7 @@ img {
     width: 70%;
     height: 80%;
     margin: auto;
-    padding: 4rem 4rem;
+    padding: 2rem 4rem;
 
     /* transform: translate(-50%, -50%); */
     border-radius: 40px;
@@ -571,7 +548,7 @@ img {
     background-color: white;
     box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
 
-    background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .5)), url('/src/img/bgd_menu.png');
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .8)), url('/src/img/bgd_menu.png');
     background-repeat: no-repeat;
     background-size: cover;
     overflow: auto;
@@ -582,7 +559,10 @@ img {
 .guide-header {
     font-size: 2rem;
     font-weight: bold;
-    text-decoration: underline;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+
+    /* text-decoration: underline; */
 
     color: var(--primary-color);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -591,8 +571,8 @@ img {
 
 .guide-message {
     font-size: 1.5rem;
-    line-height: 2rem;
-    margin: 2rem 0;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
 
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
@@ -619,6 +599,82 @@ img {
 
 .btn-guide-modal:hover {
     background-color: green;
+}
+
+.welcome_chips {
+    max-height: 100px;
+    max-width: 50%;
+
+    /* margin: auto; */
+    position: relative;
+    z-index: 35;
+    /*animation: flashanime 0.8s alternate infinite ease-in;*/
+}
+
+.guide-image-card-hidden {
+    width: 15rem;
+    height: 9rem;
+    margin-bottom: 1rem;
+    /* border: 1px solid rebeccapurple; */
+}
+
+.guide-image-card-values {
+    margin: auto;
+    width: 50rem;
+    height: 30rem;
+}
+
+.guide-image-card-hidden img,
+.guide-image-card-values img {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+
+}
+
+.guide-highlight {
+    color: var(--primary-dark-2);
+    font-weight: bold;
+}
+
+.guide-win {
+    color: rgb(27, 200, 27);
+    font-weight: bold;
+
+}
+
+.guide-loose {
+    color: rgb(233, 38, 38);
+    font-weight: bold;
+
+    line-height: 1.5;
+}
+
+.close-guide {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-guide-modal {
+    height: 2.3rem;
+    width: 2.3rem;
+    position: fixed;
+
+    text-align: center;
+    background-color: rgb(104, 103, 103, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transition: all 0.5s;
+}
+
+.close-guide-modal:hover {
+    cursor: pointer;
+    transform: rotate(180deg);
+}
+
+.m4 {
+    margin-top: 4rem;
 }
 
 /* //////////////////////////////////////////////

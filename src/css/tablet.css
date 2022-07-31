@@ -1,0 +1,150 @@
+body {
+    height: 100vh;
+}
+
+.main-container {
+    width: 95%;
+    height: 70%;
+    padding: 0 6rem;
+}
+
+.single-card {
+    height: 115px;
+    width: 90px;
+    margin: 0 0.3rem;
+}
+
+.back-card {
+    height: 115px;
+    width: 90px;
+    margin: 0 0.3rem;
+}
+
+.status-container button {
+    font-weight: bold;
+    height: 6.5rem;
+    width: 6.5rem;
+}
+
+.btn-main {
+    font-size: 1.5rem;
+}
+
+.score {
+    height: 65%;
+    /* border: 1px red solid; */
+}
+
+.card-sum {
+    height: 3.5rem;
+    width: 3.5rem;
+    font-size: 1.5rem;
+}
+
+
+
+/* ////////////////// chips //////////////////// */
+
+.chips-container {
+    width: 60%;
+    height: 40%;
+    padding: 4rem 3rem;
+}
+
+/* ////////////////////////////// flash ////////////////////
+ */
+
+
+.message .head {
+    font-size: 1.5rem;
+    margin: 8px 8px 0px 8px;
+}
+
+.message p {
+    margin: 0.5rem;
+    font-size: 1.3rem;
+}
+
+/* ///////////////////////////////////////// Highscore  ////////////////////////////////////////// */
+
+
+.highscore-image img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.highscore {
+    font-size: 2rem;
+}
+
+/* ////////////////////////////////////////  How to play Guide  ////////////////////////////////////// */
+
+.guide-image img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.guide-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    padding: 1.5rem 3rem;
+    border: none;
+    border-radius: 0;
+}
+
+.guide-header {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.guide-message {
+    font-size: 1.3rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.btn-guide-modal {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+}
+
+.welcome_chips {
+    max-height: 100px;
+    max-width: 55%;
+}
+
+.guide-image-card-hidden {
+    width: 13rem;
+    height: 8rem;
+    /* border: 1px solid rebeccapurple; */
+}
+
+.guide-image-card-values {
+    margin: auto;
+    width: 40rem;
+    height: 22rem;
+}
+
+.close-guide-modal {
+    height: 2.3rem;
+    width: 2.3rem;
+}
+
+
+/* ////////////// GameOver /////////////////////// */
+
+.gameover-container {
+    width: 100%;
+    height: 80%;
+}
+
+.gameover-container img {
+    width: 80%;
+    height: 50%;
+}
+
+.btn-newgame {
+    width: 40%;
+}

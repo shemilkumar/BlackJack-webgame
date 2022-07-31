@@ -1,0 +1,11 @@
+.single-card {
+    height: 130px;
+    width: 95px;
+    margin: 0 0.3rem;
+}
+
+.back-card {
+    height: 130px;
+    width: 95px;
+    margin: 0 0.4rem;
+}
