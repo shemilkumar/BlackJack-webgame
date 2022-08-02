@@ -14,8 +14,6 @@ class Deck {
     _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
     _ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 
-    // _suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-    // _ranks = ['ace',];
 
     _createCard = (suitsValue, ranksValue) => ({ suit: suitsValue, rank: ranksValue });
 
@@ -48,6 +46,7 @@ class Deck {
 
 class Hand {
 
+    _singleCardEl = '';
     handCards = [];
     handValue = 0;
 
@@ -63,7 +62,7 @@ class Hand {
         else {
             this.handCards.push(card);
             this.handValue = this.handValue + cardValues[card.rank];
-            console.log("card added", this.handCards, this.handValue);
+            // console.log("card added", this.handCards, this.handValue);
         }
     }
 }
@@ -89,7 +88,7 @@ class Chips {
 ///////////////////////////////////////////////////////////////////
 
 
-class Play {
+class Game {
 
 
     _deck;
@@ -100,6 +99,7 @@ class Play {
     _choice;
     _round = 0;
     _highscore;
+    _flag;
 
     // Starting the game - game open
     _btnGameOpen = document.querySelector('.btn-game-open');
@@ -162,7 +162,6 @@ class Play {
     _welcomeChipsEl = document.querySelector('.welcome_chips');
 
 
-
     constructor() {
 
         // Game opening
@@ -183,7 +182,6 @@ class Play {
 
         //Quit event
         this._promptQuitBtn.addEventListener('click', this._promptQuit.bind(this));
-
         this._btnCloseAlert.forEach(element => element.addEventListener('click', this._closeAlert.bind(this)));
 
         //Flash events
@@ -196,13 +194,9 @@ class Play {
             element.addEventListener('click', this._closeGuideModal.bind(this)));
 
         this._btnGuideOpen.addEventListener('click', this._openGuideModal.bind(this));
-        // window.addEventListener ('load', this._openGuideModal.bind(this));
-        // window.onload = (event) => this._openGuideModal.bind(this);
 
         // newgame event
         this._btnNewGameEl.addEventListener('click', this._reload.bind(this));
-        // this._gameOverEl.querySelector('img').style.top = '-60%';
-        // this._gameOverEl.querySelector('.btn-newgame').style.top = '170%';
 
         // geting highscore from browser
         this._getHighscore();
@@ -213,9 +207,19 @@ class Play {
         this._gameOpenEl.querySelector('img').style.left = '-50%';
         this._gameOpenEl.querySelector('.btn-game-open').style.left = '150%';
 
+        if (localStorage.getItem('firstTime') === null) {
+            localStorage.setItem('firstTime', true);
+            this._flag = true;
+        }
+        else this._flag = false;
+
+
         setTimeout(() => {
             this._gameOpenEl.classList.add('hidden');
-            setTimeout(() => this.start(), 400);
+            setTimeout(() => {
+                if (this._flag === true) this._openGuideModal();
+                this.start();
+            }, 400);
         }, 350);
 
     }
@@ -268,6 +272,9 @@ class Play {
 
     // Loose game method
     _looseGame() {
+
+        // this._sound.play();
+
         this._overlay.classList.remove('hidden');
 
         this._looseGameFlashEl.style.animation = 'flashanime 1s 1 ease-in-out';
@@ -305,8 +312,8 @@ class Play {
         this._guideModalEl.style.opacity = 0;
     }
 
-    //Quit Method
 
+    //Quit Method
     _promptQuit() {
         this._closeChipsModal();
         this._overlay.classList.remove('hidden');
@@ -404,7 +411,7 @@ class Play {
     }
 
     _closeMessage(flag = 1) {
-        // flag === 1 ? this._successMssgEl.classList.add('hidden') : this._errorMssgEl.classList.add('hidden');;
+
         if (flag === 1) {
             this._successMssgEl.classList.add('hidden');
             this._successMssgEl.style.animation = 'none';
@@ -460,13 +467,15 @@ class Play {
 
     _startPlay() {
 
-        console.log("=============== round " + (++this._round) + "================");
+        // console.log("=============== round " + (++this._round) + "================");
+
+        ++this._round;
 
         this._deck = new Deck();
         this._player = new Hand();
         this._dealer = new Hand();
 
-        console.log(this._bet);
+        // console.log(this._bet);
 
         ["player", "dealer"].map(el => this._addCardsForStarting());
 
@@ -504,31 +513,20 @@ class Play {
     _dealerWin() {
 
         this._chips.looseBet(this._bet);
-        // console.log(view._dealerElement);
-        // view._dealerValueEl.closest('.card-sum').style.color = '#fff';
-        // view._dealerValueEl.closest('.card-sum').style.backgroundColor = 'rgb(12, 143, 12)';
-        // view._dealerValueEl.closest('.card-sum').style.border = '3px solid greenyellow';
-
-        console.log(this._chips.chips);
         setTimeout(() => this._showFlash(0), 1000);
 
-        console.log("dealer wins --");
         this._showResult();
     }
 
     _playerWin() {
 
         this._chips.winBet(this._bet);
-        console.log(this._chips.chips);
         setTimeout(() => this._showFlash(1), 1000);
-        // this._won.play();
 
-        console.log("player wins --");
         this._showResult();
     }
 
     _jackPot() {
-        console.log("Jackpot !!!");
         this._chips.winBet(this._bet);
         this._showJackpot();
         this._showResult();
@@ -537,10 +535,8 @@ class Play {
     _showWithoutFirstCard() {
 
         const valueWithoutFirstCard = this._dealer.handValue - cardValues[this._dealer.handCards[0].rank]
-        console.log("Dealer - without first card");
-        console.log(this._dealer.handCards, valueWithoutFirstCard);
-        console.log("Player");
-        console.log(this._player.handCards, this._player.handValue);
+        // console.log(this._dealer.handCards, valueWithoutFirstCard);
+        // console.log(this._player.handCards, this._player.handValue);
 
         // Render the Views
         const cardArr = [this._player.handCards, this._dealer.handCards, true];
@@ -550,12 +546,6 @@ class Play {
     }
 
     _showResult() {
-
-        console.log("Dealer");
-        // console.log(this._dealer.handCards, this._dealer.handValue);
-        console.log("Player");
-        // console.log(this._player.handCards, this._player.handValue);
-
         const cardArr = [this._player.handCards, this._dealer.handCards];
         const valuesArr = [this._player.handValue, this._dealer.handValue];
 
@@ -574,8 +564,6 @@ class Play {
 
             this._overlay.classList.remove('hidden');
 
-            console.log("You loose the game !");
-            // alert("You loose the game, you dont have any chips for bet !!!");
             setTimeout(() => this._looseGame(), 500);
 
             this._chips = 0;
@@ -584,8 +572,8 @@ class Play {
     }
 }
 
-const game = function () {
-    const play = new Play();
+const play = function () {
+    const game = new Game();
 }
 
-game();
+play();

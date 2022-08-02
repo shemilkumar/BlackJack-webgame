@@ -47,9 +47,39 @@ body {
 
 .chips-container {
     width: 60%;
-    height: 40%;
+    height: 50%;
     padding: 4rem 3rem;
 }
+
+/* .single-chip {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.small-chip {
+    height: 80px;
+    width: 110px;
+}
+
+.five-chip {
+    height: 85px;
+    width: 85px;
+} */
+
+/* .chips-btn {
+    display: grid;
+    grid-template-rows: repeat(3, 33%);
+    grid-template-columns: repeat(3, 33%);
+ } */
+
+/* 
+.btn-place-bet,
+.btn-modal-quit {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+} */
+
 
 /* ////////////////////////////// flash ////////////////////
  */

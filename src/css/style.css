@@ -34,6 +34,7 @@ body {
     font-family: Montserrat, sans-serif;
     box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.05);
     transition: 220ms all ease-in-out;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -286,6 +287,19 @@ img {
     height: 95px;
     width: 95px;
 }
+
+.single-chip:hover,
+.small-chip:hover,
+.five-chip:hover {
+    cursor: pointer;
+}
+
+.single-chip:active,
+.small-chip:active,
+.five-chip:active {
+    transform: scale(0.95);
+}
+
 
 .chips-modal-p,
 .chips-value-total {
@@ -603,9 +617,9 @@ img {
 
 .welcome_chips {
     max-height: 100px;
-    max-width: 50%;
+    max-width: 55%;
 
-    /* margin: auto; */
+    margin: auto;
     position: relative;
     z-index: 35;
     /*animation: flashanime 0.8s alternate infinite ease-in;*/

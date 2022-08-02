@@ -66,34 +66,36 @@ class View {
         parentElement.insertAdjacentHTML('afterbegin', markup);
     }
 
-    update() {
+    // update() {
 
-        const newMarkup = this._generateMarkup();
+    //     const newMarkup = this._generateMarkup();
 
-        const newDOM = document.createRange().createContextualFragment(newMarkup);
-        const newElements = Array.from(newDOM.querySelectorAll('*'));
-        const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+    //     const newDOM = document.createRange().createContextualFragment(newMarkup);
+    //     const newElements = Array.from(newDOM.querySelectorAll('*'));
+    //     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
 
-        newElements.forEach((newEl, i) => {
-            const curEl = curElements[i];
+    //     newElements.forEach((newEl, i) => {
+    //         const curEl = curElements[i];
 
-            if (!newEl.isEqualNode(curEl) &&
-                newEl.firstChild?.nodeValue.trim() !== '') {
-                curEl.textContent = newEl.textContent;
-            }
+    //         if (!newEl.isEqualNode(curEl) &&
+    //             newEl.firstChild?.nodeValue.trim() !== '') {
+    //             curEl.textContent = newEl.textContent;
+    //         }
 
-            if (!newEl.isEqualNode(curEl))
-                Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
-        });
-    }
+    //         if (!newEl.isEqualNode(curEl))
+    //             Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
+    //     });
+    // }
 
     _generateCardsMarkup(card) {
-        return `<img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
+        // return `<img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card"  class="single-card">`;
+        return `<img src="/cards/${card.rank}_of_${card.suit}.png" alt="Card"  class="single-card">`;
     }
 
     _generateWithoutFirstMarkup(card) {
-        return `<img src="/src/img/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
+        // return `<img src="/src/img/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
+        return `<img src="/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
     }
 }
 
-export default new View(); 
+export default new View();
