@@ -167,6 +167,9 @@ class Game {
     // confetti
     _confettiElement = document.querySelector('.my-canvas');
 
+    // copyright year 
+    _copyrightYearEl = document.querySelector('.copyright-year');
+
 
     constructor() {
 
@@ -207,6 +210,9 @@ class Game {
 
         // newgame event
         this._btnNewGameEl.addEventListener('click', this._reload.bind(this));
+
+        // copyright year
+        this._copyrightYearEl.textContent = new Date().getFullYear();
 
         // geting highscore from browser
         this._getHighscore();
