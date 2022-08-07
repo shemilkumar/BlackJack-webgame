@@ -9,3 +9,11 @@
     width: 95px;
     margin: 0 0.4rem;
 }
+
+@media (max-height: 800px) {
+    .chips-container {
+        width: 30%;
+        height: 60%;
+        padding: 4rem 3rem;
+    }
+}

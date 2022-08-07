@@ -5,21 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Simple BlackJack Webgame | The game which is usually played in Casino. Casino Blackjack Webgame| created by Shemil| Blackjack shemil">
 
     <title>BlackJack</title>
+    <link rel="shortcut icon" href="/src/img/favicon.png" type="image/png">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" media="screen and (max-height: 800px)" href="/src/css/laptop.css">
     <link rel="stylesheet" media="screen and (max-width: 1600px)" href="/src/css/laptop.css">
     <link rel="stylesheet" media="screen and (max-width: 1300px)" href="/src/css/tablet.css">
     <link rel="stylesheet" media="screen and (max-width: 600px)" href="/src/css/mobile.css">
 
     <script type="module" defer src="/src/js/script.js"></script>
 
-
 </head>
 
 <body>
+
+    <div class="preloader"></div>
+
+    <canvas class="my-canvas"></canvas>
 
     <div class="gameopen-container">
         <img src="/src/img/gameover.png" alt="gameopen">
@@ -93,7 +101,7 @@
 
         </div>
 
-        <div class="chips-value-total">0</div>
+        <div class="chips-value-total" contenteditable="true">0</div>
 
         <div class="modal-btns">
             <button class="btn btn-place-bet">Place the bet !</button>
@@ -111,6 +119,9 @@
         </div>
 
         <div class="m4">
+
+            <p class="guide-header" style="text-align:center;font-size: 3rem;">How To Play</p>
+
             <p class="guide-header">Card Values</p>
 
             <div class="guide-image-card-values">
@@ -118,7 +129,7 @@
             </div>
 
             <p class=" guide-header ">Welcome Reward</p>
-            <p class="guide-message">You will get 100$ chips points for playing 🎊️</p>
+            <p class="guide-message">You will get 100$ chips point as joining reward🎊️</p>
 
             <div class="welcome_chips">
                 <div class="block">
@@ -133,8 +144,6 @@
 
             <p class="guide-header"></p>
             <p class="guide-message">
-                <!-- This game works with 2 players
-            One is the player and other one is dealer which is the computer itself. -->
                 You have to place bet first. <br>
             </p>
 
@@ -149,14 +158,14 @@
 
             <p class="guide-message .points">
                 > Total value is the sum of values in two cards. <br> <br>
-                <!-- Now we know the total value of player and one of the values of dealer -->
             </p>
 
             <p class="guide-header">Gameplay</p>
             <p class="guide-message">Player has the choice to <span class="guide-highlight">HIT </span> or <span
                     class="guide-highlight">STAY</span> <br> <br>
                 <span class="guide-highlight">HIT </span> indicates player wants another card. <br>
-                <span class="guide-highlight">STAY</span> indicates player don't want another card and passes the chance
+                <span class="guide-highlight">STAY</span> indicates player doesn't want another card and passes the
+                chance
                 to
                 dealer. <br>
             </p> <br>
@@ -175,6 +184,23 @@
 
             <div class="btn btn-guide"><button class="btn-guide-modal">Let's Play</button></div>
         </div>
+        <footer class="footer-container">
+            <div class="connect">
+                <p>Connect with me </p> &nbsp;&nbsp;&nbsp;
+                <span class="icons">
+                    <a href="https://www.linkedin.com/in/shemilkumar" target="_blank"><img
+                            src="https://img.icons8.com/sf-regular-filled/48/000000/linkedin.png" /></a>
+                    <a href="https://www.instagram.com/invites/contact/?i=1mmz9k28kjof6&utm_content=34hnqdr"
+                        target="_blank"><img
+                            src="https://img.icons8.com/ios-filled/50/000000/instagram-new--v1.png" /></a>
+                    <a href="mailto:shemil0055@gmail.com" target="_blank"><img
+                            src="https://img.icons8.com/ios-filled/50/000000/apple-mail.png" /></a>
+                </span>
+            </div>
+            <p>Copyright &copy; <span class="copyright-year">2020</span> Shemilkumar E A</p>
+        </footer>
+
+
     </div>
 
     <!-- Flash message -->
@@ -206,7 +232,7 @@
             </div>
             <div class="message">
                 <p class="head">Bad Luck</p>
-                <p>You loose the bet 💥️</p>
+                <p>You lose the bet 💥️</p>
             </div>
             <div class="undo error-close">&times;</div>
         </div>
@@ -245,22 +271,12 @@
             </div>
             <div class="message">
                 <p class="head">Well done</p>
-                <p>You earned <span class="quit-chips">0<span></span></p>
+                <p>You earned <span class="quit-chips" style="font-weight:bold;">0</span></p>
+                <p class="new-score-show" style="color: rgb(11, 94, 11);font-size: 1.5rem; font-weight: bold;"></p>
             </div>
         </div>
-    </div>
 
-    <!-- <div class="welcome_chips hidden">
-        <div class="block">
-            <div class="imager">
-                <img src="https://img.icons8.com/fluency/48/000000/average-2.png" />
-            </div>
-            <div class="message">
-                <p class="head">🎉️ You Got 100💲️ Chips</p>
-            </div>
-            <div class="undo success-close">&times;</div>
-        </div>
-    </div> -->
+    </div>
 
     <div class="alert-box chips-0 hidden">
         <div class="alert-message">

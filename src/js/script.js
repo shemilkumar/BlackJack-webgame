@@ -1,10 +1,11 @@
 'use-strict'
 
 import view from "./view.js";
+import ConfettiGenerator from "confetti-js"
 
 const cardValues = {
     '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'jack': 10,
-    'queen': 10, 'king': 10,
+    'queen': 10, 'king': 10, 'ace': 11
 };
 
 class Deck {
@@ -62,7 +63,6 @@ class Hand {
         else {
             this.handCards.push(card);
             this.handValue = this.handValue + cardValues[card.rank];
-            // console.log("card added", this.handCards, this.handValue);
         }
     }
 }
@@ -85,7 +85,6 @@ class Chips {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
 
 
 class Game {
@@ -100,6 +99,7 @@ class Game {
     _round = 0;
     _highscore;
     _flag;
+    _singleCards;
 
     // Starting the game - game open
     _btnGameOpen = document.querySelector('.btn-game-open');
@@ -161,8 +161,18 @@ class Game {
     //welcome
     _welcomeChipsEl = document.querySelector('.welcome_chips');
 
+    // preloader
+    _preloaderEl = document.querySelector('.preloader');
+
+    // confetti
+    _confettiElement = document.querySelector('.my-canvas');
+
 
     constructor() {
+
+        // _confettiShow();
+        // preload
+        window.addEventListener('load', this._preload.bind(this));
 
         // Game opening
         setTimeout(() => {
@@ -202,12 +212,17 @@ class Game {
         this._getHighscore();
     }
 
+    // preload
+    _preload() {
+        this._preloaderEl.style.display = 'none';
+    }
+
     //gameOpen method
     gameOpen() {
         this._gameOpenEl.querySelector('img').style.left = '-50%';
         this._gameOpenEl.querySelector('.btn-game-open').style.left = '150%';
 
-        if (localStorage.getItem('firstTime') === null) {
+        if (localStorage.getItem('firstTime') !== 'true') {
             localStorage.setItem('firstTime', true);
             this._flag = true;
         }
@@ -312,6 +327,15 @@ class Game {
         this._guideModalEl.style.opacity = 0;
     }
 
+    // newhighscore add html
+    _newHighscoreFlash(newHighscore) {
+        let markup = '<p>Your new Highscore <span class="new-highscore">0</span></p>';
+        this._quitGameFlashEl.querySelector('.new-score-show').innerHTML = markup;
+
+        let newHighscoreEl = document.querySelector('.new-highscore');
+        newHighscoreEl.textContent = newHighscore + ' 🏆️';
+    } $
+
 
     //Quit Method
     _promptQuit() {
@@ -319,8 +343,14 @@ class Game {
         this._overlay.classList.remove('hidden');
 
         if (this._highscore < this._chips.chips) {
+
+            this._confettiShow();
+
             this._highscoreEl.textContent = this._chips.chips;
             this._highscore = this._chips.chips;
+
+            this._newHighscoreFlash(this._highscore);
+
             localStorage.setItem('highscore', this._highscore);
         }
 
@@ -332,6 +362,7 @@ class Game {
             this._quitGameFlashEl.classList.add('hidden');
             this._quitGameFlashEl.style.animation = 'none';
 
+            this._confettiHide();
             this._gameOver();
         }, 2500);
     }
@@ -389,18 +420,39 @@ class Game {
 
             if (betFromUser <= this._chips.chips) {
                 this._closeChipsModal();
-                this._clearChips();
 
                 this._bet = betFromUser;
                 this._startPlay();
+                this._clearChips();
             }
         }
     }
 
 
     //flash methods
+
+    _confettiShow() {
+
+        this._confettiElement.style.zIndex = '1000';
+        this._confettiElement.classList.remove('hidden');
+
+        let confettiSettings = {
+            target: this._confettiElement,
+            clock: 50,
+            size: 2,
+        };
+        let confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+    }
+
+    _confettiHide() {
+        this._confettiElement.style.zIndex = '-1';
+        this._confettiElement.classList.add('hidden');
+    }
+
     _flashMessage(flag = 1) {
         if (flag === 1) {
+            this._confettiShow();
             this._successMssgEl.style.animation = 'flashanime 1s 1 ease-in-out';
             this._successMssgEl.classList.remove('hidden');
         } else {
@@ -415,6 +467,7 @@ class Game {
         if (flag === 1) {
             this._successMssgEl.classList.add('hidden');
             this._successMssgEl.style.animation = 'none';
+            this._confettiHide();
         } else {
             this._errorMssgEl.classList.add('hidden');
             this._errorMssgEl.style.animation = 'none';
@@ -433,6 +486,7 @@ class Game {
 
     _showJackpot() {
         setTimeout(() => {
+            this._confettiShow();
             this._jackpotEl.style.animation = 'flashanime 1s 1 ease-in-out';
             this._jackpotEl.classList.remove('hidden');
             this._overlay.classList.remove('hidden');
@@ -440,6 +494,7 @@ class Game {
                 this._jackpotEl.classList.add('hidden');
                 this._overlay.classList.remove('hidden');
                 this._jackpotEl.style.animation = 'none';
+                this._confettiHide();
             }, 2300);
         }, 800);
 
@@ -534,9 +589,9 @@ class Game {
 
     _showWithoutFirstCard() {
 
-        const valueWithoutFirstCard = this._dealer.handValue - cardValues[this._dealer.handCards[0].rank]
-        // console.log(this._dealer.handCards, valueWithoutFirstCard);
-        // console.log(this._player.handCards, this._player.handValue);
+        // console.log(this._dealer.handCards, this._dealer.handValue);
+        const valueWithoutFirstCard = this._dealer.handValue - cardValues[this._dealer.handCards[0].rank];
+
 
         // Render the Views
         const cardArr = [this._player.handCards, this._dealer.handCards, true];
@@ -550,6 +605,10 @@ class Game {
         const valuesArr = [this._player.handValue, this._dealer.handValue];
 
         view.render(cardArr, valuesArr);
+
+        this._singleCards = document.querySelectorAll('.single-card');
+
+        this._singleCards.forEach(el => el.addEventListener('load', el.classList.remove('lazy-img')));
 
         setTimeout(() => this.start(), 3000);
     }

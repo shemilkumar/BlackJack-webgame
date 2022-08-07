@@ -1,6 +1,6 @@
 {
   "name": "blackjack",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "casino blackjack webgame",
   "scripts": {
     "start": "parcel index.html",
@@ -12,6 +12,7 @@
     "parcel": "^2.6.2"
   },
   "dependencies": {
+    "confetti-js": "^0.0.18",
     "howler": "^2.2.3"
   }
 }

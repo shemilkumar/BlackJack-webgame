@@ -5,7 +5,6 @@ class View {
     // _parentElement = '';
     _dealerElement = document.querySelector('.cards-container-dealer');
     _playerElement = document.querySelector('.cards-container-player');
-    // _inHandCards;
 
     _dealerValueEl = document.querySelector('.dealer-sum-amount');
     _playerValueEl = document.querySelector('.player-sum-amount');
@@ -66,35 +65,14 @@ class View {
         parentElement.insertAdjacentHTML('afterbegin', markup);
     }
 
-    // update() {
-
-    //     const newMarkup = this._generateMarkup();
-
-    //     const newDOM = document.createRange().createContextualFragment(newMarkup);
-    //     const newElements = Array.from(newDOM.querySelectorAll('*'));
-    //     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
-
-    //     newElements.forEach((newEl, i) => {
-    //         const curEl = curElements[i];
-
-    //         if (!newEl.isEqualNode(curEl) &&
-    //             newEl.firstChild?.nodeValue.trim() !== '') {
-    //             curEl.textContent = newEl.textContent;
-    //         }
-
-    //         if (!newEl.isEqualNode(curEl))
-    //             Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
-    //     });
-    // }
-
     _generateCardsMarkup(card) {
         // return `<img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card"  class="single-card">`;
-        return `<img src="/cards/${card.rank}_of_${card.suit}.png" alt="Card"  class="single-card">`;
+        return `<img src="/cards/${card.rank}_of_${card.suit}.png" class="single-card lazy-img ">`;
     }
 
     _generateWithoutFirstMarkup(card) {
         // return `<img src="/src/img/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/src/img/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
-        return `<img src="/back_card_blue.png" alt="FirstCard" class="back-card" ><img src="/cards/${card.rank}_of_${card.suit}.png" alt="Card" class="single-card">`;
+        return `<img src="/back_card_blue.png" class="back-card" ><img src="/cards/${card.rank}_of_${card.suit}.png" class="single-card lazy-img">`;
     }
 }
 

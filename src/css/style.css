@@ -52,6 +52,14 @@ img {
     height: 220px;
 }
 
+.lazy-img {
+    background-size: 140px 170px;
+
+    background-image: url(/src/img/back_card_blue.png);
+
+    filter: blur(7px);
+}
+
 .overlay,
 .overlay-gameover {
     position: fixed;
@@ -61,7 +69,7 @@ img {
     height: 100%;
 
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    /* backdrop-filter: blur(4px); */
     transition: all 0.5s;
 
     z-index: 5;
@@ -74,6 +82,14 @@ img {
 .hidden {
     opacity: 0;
     visibility: hidden;
+}
+
+.preloader {
+    height: 100vh;
+    width: 100vw;
+    background: #000 url(/src/img/loading.gif) no-repeat center center;
+    position: fixed;
+    z-index: 500;
 }
 
 /* .overlay-success {
@@ -140,6 +156,8 @@ img {
     height: 170px;
     width: 135px;
     margin: 0 0.4rem;
+    filter: none;
+    background: none;
 }
 
 .back-card {
@@ -245,18 +263,6 @@ img {
     z-index: 10;
 }
 
-/* .btn--close-modal {
-    font-family: inherit;
-    color: inherit;
-    position: absolute;
-    top: 0.5rem;
-    right: 1.6rem;
-    font-size: 3.5rem;
-    cursor: pointer;
-    border: none;
-    background: none;
-} */
-
 .chips-btn {
     height: 60%;
     width: 100%;
@@ -288,6 +294,10 @@ img {
     width: 95px;
 }
 
+.first-chip {
+    background-color: rgb(212, 212, 239);
+}
+
 .single-chip:hover,
 .small-chip:hover,
 .five-chip:hover {
@@ -317,7 +327,14 @@ img {
     margin: 1rem 0;
 
     color: var(--primary-dark);
+    border: 1px solid #fff;
 }
+
+.chips-value-total:hover {
+
+    border: 1px solid rgb(249, 212, 27, 0.7);
+}
+
 
 .modal-btns {
     display: grid;
@@ -428,10 +445,6 @@ img {
     /*animation: flashanime 0.8s alternate infinite ease-in;*/
 }
 
-/* .jackpot_container {
-    left: 41%;
-} */
-
 .block {
     width: 100%;
     padding: 0 0.6rem;
@@ -459,7 +472,9 @@ img {
 
 .quit_block {
     border: 0.2rem solid var(--primary-dark-2);
-    background-color: var(--primary-dark);
+    background-color: #d79c11;
+    height: 50%;
+    /* width: 70%; */
 }
 
 .imager img {
@@ -556,7 +571,6 @@ img {
     margin: auto;
     padding: 2rem 4rem;
 
-    /* transform: translate(-50%, -50%); */
     border-radius: 40px;
     border: solid 3px rgb(99, 244, 99);
     background-color: white;
@@ -575,8 +589,6 @@ img {
     font-weight: bold;
     margin-top: 2rem;
     margin-bottom: 1.5rem;
-
-    /* text-decoration: underline; */
 
     color: var(--primary-color);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -668,6 +680,7 @@ img {
 .close-guide {
     display: flex;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 .close-guide-modal {
@@ -726,6 +739,8 @@ img {
 }
 
 .gameopen-container img {
+    height: 38%;
+    width: 38%;
     top: 40%;
     left: -50%;
 }
@@ -749,7 +764,8 @@ img {
 }
 
 .btn-game-open {
-    top: 70%;
+    width: 25%;
+    top: 63%;
     left: 150%;
 }
 
@@ -759,4 +775,56 @@ img {
     background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .8)), url('/src/img/bgd_menu.png');
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+/* confetti */
+.my-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
+
+/* footer */
+
+.footer-container {
+    /* position: absolute; */
+    bottom: 0;
+    margin-top: 3rem;
+    padding: 0;
+    width: 100%;
+    height: 2rem;
+    padding: 0.5rem;
+    background-color: rgb(33, 31, 31, 0.1);
+    /* background-color: rgb(255, 0, 0, 1); */
+
+    color: rgb(204, 204, 204, 0.5);
+    font-size: 0.8rem;
+
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    text-align: center;
+}
+
+.icons img {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 0 0.1rem;
+    background-color: rgb(204, 204, 204, 0.5);
+    border-radius: 30%;
+}
+
+.icons img:hover {
+    background-color: rgb(204, 204, 204, 1);
+    cursor: pointer;
+}
+
+.connect {
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }

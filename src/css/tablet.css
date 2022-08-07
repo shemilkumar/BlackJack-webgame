@@ -187,3 +187,19 @@ body {
 .btn-game-open {
     width: 60%;
 }
+
+@media (max-height: 800px) {
+    .chips-container {
+        width: 30%;
+        height: 60%;
+        padding: 4rem 3rem;
+    }
+}
+
+@media (max-height: 650px) {
+    .chips-container {
+        width: 30%;
+        height: 70%;
+        padding: 4rem 3rem;
+    }
+}
